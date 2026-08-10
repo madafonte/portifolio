@@ -1,0 +1,631 @@
+<style>
+  :root{
+    --bg:#FBF3F6;
+    --bg-panel:#FFFFFF;
+    --bg-sunken:#F4E5ED;
+    --ink:#2A1230;
+    --ink-dim:#6E5468;
+    --ink-faint:#9A8394;
+    --accent:#E31C6C;
+    --accent-ink:#FFFFFF;
+    --accent-2:#C97A00;
+    --accent-3:#6C4FD9;
+    --line:rgba(42,18,48,0.14);
+    --shadow:rgba(87,29,64,0.18);
+    --dot-kw:#B3106A;
+    --dot-2:#B3106A;
+
+    --font-display:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+    --font-body:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+    --font-serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Georgia,serif;
+    --font-mono:ui-monospace,"Cascadia Code","Consolas","SFMono-Regular",Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#180D1A;
+      --bg-panel:#241329;
+      --bg-sunken:#130A15;
+      --ink:#F7EDE7;
+      --ink-dim:#C9B8C4;
+      --ink-faint:#8C7787;
+      --accent:#FF4D8D;
+      --accent-ink:#1A0F1C;
+      --accent-2:#FFC857;
+      --accent-3:#B8A6FF;
+      --line:rgba(247,237,231,0.14);
+      --shadow:rgba(0,0,0,0.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#180D1A;
+    --bg-panel:#241329;
+    --bg-sunken:#130A15;
+    --ink:#F7EDE7;
+    --ink-dim:#C9B8C4;
+    --ink-faint:#8C7787;
+    --accent:#FF4D8D;
+    --accent-ink:#1A0F1C;
+    --accent-2:#FFC857;
+    --accent-3:#B8A6FF;
+    --line:rgba(247,237,231,0.14);
+    --shadow:rgba(0,0,0,0.5);
+  }
+  :root[data-theme="light"]{
+    --bg:#FBF3F6;
+    --bg-panel:#FFFFFF;
+    --bg-sunken:#F4E5ED;
+    --ink:#2A1230;
+    --ink-dim:#6E5468;
+    --ink-faint:#9A8394;
+    --accent:#E31C6C;
+    --accent-ink:#FFFFFF;
+    --accent-2:#C97A00;
+    --accent-3:#6C4FD9;
+    --line:rgba(42,18,48,0.14);
+    --shadow:rgba(87,29,64,0.18);
+  }
+
+  *,*::before,*::after{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    background-image:radial-gradient(var(--line) 1px, transparent 1px);
+    background-size:26px 26px;
+  }
+  ::selection{background:var(--accent);color:var(--accent-ink);}
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:3px;border-radius:4px;}
+
+  .container{max-width:1120px;margin:0 auto;padding:0 clamp(1.25rem,4vw,2.5rem);}
+  section{scroll-margin-top:5.5rem;}
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:.8rem;
+    letter-spacing:.04em;
+    color:var(--accent);
+    display:inline-flex;
+    align-items:center;
+    gap:.5rem;
+    margin:0 0 .9rem;
+  }
+  .eyebrow::before{content:"";width:1.4rem;height:1px;background:var(--accent);opacity:.6;}
+
+  h1,h2,h3{font-family:var(--font-display);text-wrap:balance;margin:0;}
+  h1{font-weight:800;letter-spacing:-.02em;}
+  h2{font-weight:800;letter-spacing:-.015em;font-size:clamp(1.7rem,3.4vw,2.5rem);}
+  h3{font-weight:700;font-size:1.15rem;}
+  em{font-family:var(--font-serif);font-style:italic;color:var(--accent);font-weight:500;}
+  p{margin:0;}
+  .lede{color:var(--ink-dim);font-size:1.05rem;max-width:62ch;}
+
+  .btn{
+    font-family:var(--font-body);
+    font-weight:600;
+    font-size:.95rem;
+    padding:.85rem 1.5rem;
+    border-radius:999px;
+    border:1.5px solid transparent;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:.5rem;
+    text-decoration:none;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-solid{background:var(--accent);color:var(--accent-ink);box-shadow:0 10px 24px -10px var(--shadow);}
+  .btn-solid:hover{box-shadow:0 16px 30px -10px var(--shadow);}
+  .btn-ghost{background:transparent;color:var(--ink);border-color:var(--line);}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+  .btn svg{width:16px;height:16px;}
+
+  /* ---------- nav ---------- */
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    background:color-mix(in srgb, var(--bg) 78%, transparent);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-row{display:flex;align-items:center;justify-content:space-between;padding-block:.9rem;}
+  .brand{font-family:var(--font-mono);font-weight:700;font-size:1.05rem;text-decoration:none;color:var(--ink);letter-spacing:-.02em;}
+  .brand span{color:var(--accent);}
+  .nav-links{display:flex;align-items:center;gap:1.9rem;list-style:none;margin:0;padding:0;}
+  .nav-links a{text-decoration:none;font-size:.92rem;color:var(--ink-dim);font-weight:600;transition:color .15s;}
+  .nav-links a:hover{color:var(--accent);}
+  .nav-toggle{display:none;background:none;border:1.5px solid var(--line);border-radius:10px;width:42px;height:38px;cursor:pointer;align-items:center;justify-content:center;}
+  .nav-toggle span,.nav-toggle span::before,.nav-toggle span::after{content:"";display:block;width:18px;height:2px;background:var(--ink);position:relative;transition:transform .2s;}
+  .nav-toggle span::before{position:absolute;top:-6px;}
+  .nav-toggle span::after{position:absolute;top:6px;}
+
+  @media (max-width:760px){
+    .nav-links{position:fixed;inset:57px 0 auto 0;background:var(--bg-panel);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;padding:1.25rem clamp(1.25rem,4vw,2.5rem);gap:1.1rem;transform:translateY(-130%);opacity:0;transition:transform .25s ease, opacity .2s;}
+    .nav-links.open{transform:translateY(0);opacity:1;}
+    .nav-toggle{display:inline-flex;}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{padding:8.5rem 0 5rem;position:relative;overflow:hidden;}
+  .hero-glow{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;z-index:0;pointer-events:none;}
+  .hero-glow.a{width:420px;height:420px;background:var(--accent);top:-160px;right:-120px;opacity:.28;}
+  .hero-glow.b{width:340px;height:340px;background:var(--accent-3);bottom:-140px;left:-100px;opacity:.22;}
+  .hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:3rem;align-items:center;}
+  @media (max-width:900px){.hero-inner{grid-template-columns:1fr;}}
+
+  .status-pill{
+    display:inline-flex;align-items:center;gap:.55rem;
+    font-family:var(--font-mono);font-size:.78rem;color:var(--ink-dim);
+    border:1px solid var(--line);border-radius:999px;padding:.4rem .9rem;margin-bottom:1.5rem;background:var(--bg-panel);
+  }
+  .status-dot{width:7px;height:7px;border-radius:50%;background:#3FBF6B;position:relative;flex:none;}
+  @media (prefers-reduced-motion:no-preference){
+    .status-dot::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1.5px solid #3FBF6B;animation:pulse 2.2s ease-out infinite;}
+  }
+  @keyframes pulse{0%{transform:scale(.6);opacity:.9;}100%{transform:scale(1.9);opacity:0;}}
+
+  .hero h1{font-size:clamp(2.2rem,5.2vw,3.4rem);line-height:1.06;}
+  .hero .tagline{font-size:clamp(1.15rem,2.3vw,1.5rem);color:var(--ink-dim);margin-top:1rem;font-weight:500;line-height:1.4;max-width:34ch;}
+  .hero .lede{margin-top:1.4rem;}
+  .hero-ctas{display:flex;gap:.9rem;flex-wrap:wrap;margin-top:2.1rem;}
+
+  .stat-row{display:flex;gap:1.9rem;flex-wrap:wrap;margin-top:2.6rem;padding-top:1.8rem;border-top:1px solid var(--line);}
+  .stat-num{font-family:var(--font-mono);font-weight:700;font-size:1.25rem;color:var(--ink);font-variant-numeric:tabular-nums;display:block;}
+  .stat-label{font-size:.78rem;color:var(--ink-faint);}
+
+  .code-card{
+    background:var(--bg-panel);border:1px solid var(--line);border-radius:16px;
+    box-shadow:0 24px 48px -22px var(--shadow);overflow:hidden;
+  }
+  @media (prefers-reduced-motion:no-preference){ .code-card{animation:float 6s ease-in-out infinite;} }
+  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+  .code-titlebar{display:flex;align-items:center;gap:.6rem;padding:.7rem 1rem;border-bottom:1px solid var(--line);background:var(--bg-sunken);}
+  .code-dot{width:10px;height:10px;border-radius:50%;}
+  .code-dot:nth-child(1){background:var(--accent);}
+  .code-dot:nth-child(2){background:var(--accent-2);}
+  .code-dot:nth-child(3){background:var(--accent-3);}
+  .code-filename{margin-left:.4rem;font-family:var(--font-mono);font-size:.78rem;color:var(--ink-faint);}
+  .code-body{padding:1.25rem 1.4rem;font-family:var(--font-mono);font-size:.85rem;line-height:1.75;white-space:pre;overflow-x:auto;}
+  .tok-kw{color:var(--accent);} .tok-fn{color:var(--accent-3);} .tok-str{color:var(--accent-2);} .tok-com{color:var(--ink-faint);font-style:italic;} .tok-var{color:var(--ink);}
+
+  /* ---------- section header ---------- */
+  .section{padding:5.5rem 0;}
+  .section-head{max-width:44rem;margin-bottom:2.75rem;}
+  .alt{background:var(--bg-sunken);}
+
+  /* ---------- about ---------- */
+  .about-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:3rem;}
+  @media (max-width:820px){.about-grid{grid-template-columns:1fr;}}
+  .about-grid p + p{margin-top:1.1rem;}
+  .facts{display:grid;gap:1.1rem;align-content:start;}
+  .fact{display:flex;gap:.85rem;border:1px solid var(--line);background:var(--bg-panel);border-radius:14px;padding:1rem 1.1rem;}
+  .fact svg{width:19px;height:19px;color:var(--accent);flex:none;margin-top:1px;}
+  .fact-label{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);font-family:var(--font-mono);}
+  .fact-value{font-weight:600;margin-top:.15rem;}
+
+  /* ---------- skills ---------- */
+  .skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;}
+  @media (max-width:700px){.skills-grid{grid-template-columns:1fr;}}
+  .skill-card{border:1px solid var(--line);background:var(--bg-panel);border-radius:16px;padding:1.5rem;}
+  .skill-card h3{margin-bottom:1rem;}
+  .chip-row{display:flex;flex-wrap:wrap;gap:.55rem;}
+  .chip{
+    font-family:var(--font-mono);font-size:.8rem;color:var(--ink-dim);
+    border:1px solid var(--line);border-radius:8px;padding:.4rem .7rem;background:var(--bg);
+  }
+
+  /* ---------- projects ---------- */
+  .project-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+  @media (max-width:820px){.project-grid{grid-template-columns:1fr;}}
+  .project-card{border:1px solid var(--line);background:var(--bg-panel);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:transform .18s ease, box-shadow .18s ease;}
+  .project-card:hover{transform:translateY(-4px);box-shadow:0 22px 40px -24px var(--shadow);}
+  .project-body{padding:1.4rem 1.5rem 1.6rem;display:flex;flex-direction:column;gap:.9rem;flex:1;}
+  .project-kicker{display:flex;align-items:center;gap:.5rem;font-family:var(--font-mono);font-size:.72rem;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.05em;}
+  .project-kicker svg{width:14px;height:14px;}
+  .project-body h3{font-size:1.2rem;}
+  .project-body p{color:var(--ink-dim);font-size:.95rem;}
+  .project-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:auto;padding-top:.4rem;}
+
+  /* ---------- impact ---------- */
+  .impact-grid{display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:1.25rem;}
+  @media (max-width:900px){.impact-grid{grid-template-columns:1fr;}}
+  .impact-card{border:1px solid var(--line);background:var(--bg-panel);border-radius:16px;padding:1.6rem;display:flex;flex-direction:column;gap:.8rem;}
+  .impact-card.featured{background:linear-gradient(155deg, color-mix(in srgb, var(--accent-3) 16%, var(--bg-panel)), var(--bg-panel));border-color:color-mix(in srgb, var(--accent-3) 45%, var(--line));}
+  .impact-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb, var(--accent) 14%, transparent);color:var(--accent);}
+  .impact-card.featured .impact-icon{background:color-mix(in srgb, var(--accent-3) 20%, transparent);color:var(--accent-3);}
+  .impact-icon svg{width:19px;height:19px;}
+  .impact-card p{color:var(--ink-dim);font-size:.94rem;}
+  .impact-org{font-family:var(--font-mono);font-size:.75rem;color:var(--ink-faint);}
+
+  /* ---------- formation ---------- */
+  .formation-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;}
+  @media (max-width:820px){.formation-grid{grid-template-columns:1fr;}}
+  .edu-card{border:1px solid var(--line);background:var(--bg-panel);border-radius:16px;padding:1.6rem;}
+  .edu-card h3{font-size:1.05rem;}
+  .edu-meta{font-family:var(--font-mono);font-size:.8rem;color:var(--accent);margin-top:.3rem;}
+  .edu-sub{color:var(--ink-faint);font-size:.85rem;margin-top:.1rem;}
+  .edu-card .chip-row{margin-top:1.1rem;}
+  .cert-list{list-style:none;margin:0;padding:0;display:grid;gap:.9rem;}
+  .cert-item{display:flex;gap:.85rem;align-items:flex-start;border:1px solid var(--line);background:var(--bg-panel);border-radius:12px;padding:.85rem 1rem;}
+  .cert-item svg{width:18px;height:18px;color:var(--accent-2);flex:none;margin-top:2px;}
+  .cert-name{font-weight:600;font-size:.92rem;}
+  .cert-org{color:var(--ink-faint);font-size:.8rem;}
+  .lang-row{display:flex;gap:1rem;margin-top:1.25rem;}
+  .lang-chip{border:1px solid var(--line);border-radius:10px;padding:.6rem .9rem;font-size:.85rem;flex:1;background:var(--bg-panel);}
+  .lang-chip b{display:block;font-size:.78rem;color:var(--ink-faint);font-weight:600;font-family:var(--font-mono);}
+
+  /* ---------- community ---------- */
+  .community-row{display:flex;flex-wrap:wrap;gap:.8rem;}
+  .event-chip{display:flex;align-items:center;gap:.55rem;border:1px dashed var(--line);border-radius:999px;padding:.6rem 1.1rem;font-size:.88rem;color:var(--ink-dim);background:var(--bg-panel);}
+  .event-chip svg{width:15px;height:15px;color:var(--accent);}
+
+  /* ---------- contact ---------- */
+  .contact-wrap{border:1px solid var(--line);background:var(--bg-panel);border-radius:22px;padding:clamp(2rem,5vw,3.5rem);position:relative;overflow:hidden;}
+  .contact-wrap::before{content:"";position:absolute;width:300px;height:300px;background:var(--accent);opacity:.14;filter:blur(80px);border-radius:50%;top:-120px;right:-80px;}
+  .contact-inner{position:relative;z-index:1;}
+  .contact-links{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:2rem;}
+  .contact-link{display:flex;align-items:center;gap:.6rem;border:1px solid var(--line);border-radius:12px;padding:.8rem 1.1rem;text-decoration:none;color:var(--ink);font-size:.92rem;font-weight:600;background:var(--bg);transition:border-color .15s, color .15s, transform .15s;}
+  .contact-link:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px);}
+  .contact-link svg{width:17px;height:17px;}
+  .contact-link.pending{opacity:.6;cursor:default;border-style:dashed;}
+  .contact-link.pending:hover{transform:none;border-color:var(--line);color:var(--ink);}
+  .pending-tag{font-family:var(--font-mono);font-size:.68rem;color:var(--ink-faint);}
+
+  footer{padding:2.5rem 0 3rem;}
+  .footer-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem;border-top:1px solid var(--line);padding-top:1.6rem;font-size:.82rem;color:var(--ink-faint);}
+  .footer-row .mono{font-family:var(--font-mono);}
+</style>
+
+<header class="nav">
+  <div class="container nav-row">
+    <a class="brand" href="#top">MA<span>.</span>dev</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projetos">Projetos</a></li>
+      <li><a href="#impacto">Impacto</a></li>
+      <li><a href="#formacao">Formação</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false"><span></span></button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-glow a"></div>
+    <div class="hero-glow b"></div>
+    <div class="container hero-inner">
+      <div>
+        <div class="status-pill"><span class="status-dot"></span>Disponível para estágio · Recife, PE</div>
+        <h1>Maria Augusta<br>Hatem da Fonte</h1>
+        <p class="tagline">Código com propósito, feito com <em>estilo</em>.</p>
+        <p class="lede">Estudante de Ciência da Computação na CESAR School, no 4º período, em busca de estágio em desenvolvimento de software ou gestão de projetos. Transformo lógica em ferramentas que resolvem problemas reais — de sistemas Django a jogos em C.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-solid" href="#projetos">Ver projetos
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18 18 6M9 6h9v9"/></svg>
+          </a>
+          <a class="btn btn-ghost" href="#contato">Falar comigo</a>
+        </div>
+        <div class="stat-row">
+          <div><span class="stat-num">4º</span><span class="stat-label">período · CESAR School</span></div>
+          <div><span class="stat-num">5+</span><span class="stat-label">projetos práticos</span></div>
+          <div><span class="stat-num">3</span><span class="stat-label">monitorias e extensão</span></div>
+          <div><span class="stat-num">PT / EN</span><span class="stat-label">nativo · intermediário</span></div>
+        </div>
+      </div>
+      <div class="code-card">
+        <div class="code-titlebar">
+          <span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span>
+          <span class="code-filename">maria.py</span>
+        </div>
+        <div class="code-body"><span class="tok-kw">class</span> <span class="tok-fn">Maria</span>(Dev):
+    <span class="tok-kw">def</span> <span class="tok-fn">__init__</span>(<span class="tok-var">self</span>):
+        <span class="tok-var">self</span>.periodo = <span class="tok-str">"4º"</span>
+        <span class="tok-var">self</span>.stack = [<span class="tok-str">"Python"</span>, <span class="tok-str">"React"</span>, <span class="tok-str">"Django"</span>]
+        <span class="tok-var">self</span>.foco = <span class="tok-str">"produto + impacto social"</span>
+
+    <span class="tok-kw">def</span> <span class="tok-fn">disponivel</span>(<span class="tok-var">self</span>):
+        <span class="tok-com"># sempre aberta a boas conversas</span>
+        <span class="tok-kw">return</span> <span class="tok-kw">True</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="sobre">
+    <div class="container about-grid">
+      <div>
+        <div class="section-head">
+          <div class="eyebrow">// sobre</div>
+          <h2>Quem escreve esse código</h2>
+        </div>
+        <p class="lede">Sou estudante de Ciência da Computação na CESAR School e estou em busca de um estágio em desenvolvimento de software ou gestão de projetos. Gosto de aprender fazendo — por isso já passei por Python, JavaScript, C e Django construindo projetos que resolvem problemas reais, do bem-estar de pets ao cálculo de impacto ambiental.</p>
+        <p class="lede">Tenho vivência com metodologias ágeis (Scrum, Kanban, XP) e um jeito organizado e colaborativo de trabalhar, construído também como monitora de Fundamentos de Programação. Ensinar é, pra mim, uma forma de aprender duas vezes — e de abrir espaço para mais mulheres na tecnologia.</p>
+      </div>
+      <div class="facts">
+        <div class="fact">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.2"/></svg>
+          <div><div class="fact-label">Localização</div><div class="fact-value">Recife, Pernambuco, Brasil</div></div>
+        </div>
+        <div class="fact">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9 12 4l10 5-10 5L2 9Z"/><path d="M6 11v5c0 1.4 2.7 3 6 3s6-1.6 6-3v-5"/><path d="M22 9v6"/></svg>
+          <div><div class="fact-label">Formação</div><div class="fact-value">Ciência da Computação, CESAR School (2025–2028)</div></div>
+        </div>
+        <div class="fact">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18 18 6M9 6h9v9"/></svg>
+          <div><div class="fact-label">Foco</div><div class="fact-value">Desenvolvimento de software &amp; gestão de projetos</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="skills">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">// habilidades</div>
+        <h2>Minha stack</h2>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <h3>Linguagens</h3>
+          <div class="chip-row">
+            <span class="chip">Python</span><span class="chip">JavaScript</span><span class="chip">TypeScript</span><span class="chip">Java</span><span class="chip">C</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3>Frontend</h3>
+          <div class="chip-row">
+            <span class="chip">React</span><span class="chip">Next.js (App Router)</span><span class="chip">Tailwind CSS</span><span class="chip">HTML</span><span class="chip">CSS</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3>Dados</h3>
+          <div class="chip-row">
+            <span class="chip">Django ORM</span><span class="chip">PostgreSQL</span><span class="chip">SQLite</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3>Ferramentas &amp; métodos</h3>
+          <div class="chip-row">
+            <span class="chip">Git / GitHub</span><span class="chip">VS Code</span><span class="chip">Figma</span><span class="chip">Trello</span><span class="chip">Scrum</span><span class="chip">Kanban</span><span class="chip">XP</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="projetos">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">// projetos</div>
+        <h2>O que eu já construí</h2>
+        <p class="lede" style="margin-top:.6rem;">Uma amostra de projetos pessoais e em equipe — do backend ao pixel.</p>
+      </div>
+      <div class="project-grid">
+
+        <article class="project-card">
+          <div class="project-body">
+            <div class="project-kicker">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7"/></svg>
+              Projeto pessoal
+            </div>
+            <h3>Vida Pet — Sistema de Petshop</h3>
+            <p>Sistema em Python para organização e bem-estar de pets: cadastro, edição e acompanhamento de cuidados, metas e humor dos animais, com sugestões personalizadas por espécie e idade.</p>
+            <div class="project-tags"><span class="chip">Python</span></div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-body">
+            <div class="project-kicker">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7"/></svg>
+              Plataforma web real
+            </div>
+            <h3>Site do Jornal do Commercio</h3>
+            <p>Reformulação de interface e experiência de uma plataforma jornalística real, com melhorias de navegação voltadas ao engajamento dos leitores e recursos dinâmicos de atualização de conteúdo.</p>
+            <div class="project-tags"><span class="chip">Django</span><span class="chip">Python</span><span class="chip">UX</span></div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-body">
+            <div class="project-kicker">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17.5" cy="9" r="2.5"/><path d="M15.5 14.2c2.6.3 4.5 2.6 4.5 5.3"/></svg>
+              Equipe de 3
+            </div>
+            <h3>RE:PLAY — Minigames Retrô</h3>
+            <p>Tetris, Pac-Man e Sea Quest recriados do zero em C com a biblioteca Raylib, com foco em desempenho, lógica de jogo e manipulação gráfica em baixo nível.</p>
+            <div class="project-tags"><span class="chip">C</span><span class="chip">Raylib</span><span class="chip">Jogos</span></div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-body">
+            <div class="project-kicker">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17.5" cy="9" r="2.5"/><path d="M15.5 14.2c2.6.3 4.5 2.6 4.5 5.3"/></svg>
+              Projeto para a Edenred
+            </div>
+            <h3>Card0 — Calculadora de Impacto Ambiental</h3>
+            <p>Ferramenta que quantifica e compara emissões de CO₂e entre cartões físicos e pagamentos digitais, seguindo GHG Protocol e IPCC, com testes automatizados via Cypress.</p>
+            <div class="project-tags"><span class="chip">Next.js</span><span class="chip">TypeScript</span><span class="chip">Tailwind CSS</span><span class="chip">Cypress</span></div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="impacto">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">// impacto</div>
+        <h2>Passando o conhecimento adiante</h2>
+        <p class="lede" style="margin-top:.6rem;">Fora do código, gosto de ensinar o que aprendo — e de abrir portas para quem vem depois.</p>
+      </div>
+      <div class="impact-grid">
+        <div class="impact-card featured">
+          <div class="impact-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c.6 3.7 2.3 6.4 6 7.5-3.7 1.1-5.4 3.8-6 7.5-.6-3.7-2.3-6.4-6-7.5 3.7-1.1 5.4-3.8 6-7.5Z"/></svg>
+          </div>
+          <h3>Extensionista, Projeto Lovelaces</h3>
+          <p class="impact-org">CESAR School</p>
+          <p>Ministrou aulas de Python para meninas do ensino médio, incentivando o interesse feminino em tecnologia.</p>
+        </div>
+        <div class="impact-card">
+          <div class="impact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8 3.5 12 8 16M16 8l4.5 4-4.5 4M14 5.5l-4 13"/></svg>
+          </div>
+          <h3>Monitora de Programação</h3>
+          <p class="impact-org">Fundamentos de Programação &amp; Programação Imperativa Funcional — CESAR School</p>
+          <p>Apoio direto a colegas de turma no entendimento de lógica de programação e paradigma funcional, e na resolução de exercícios práticos.</p>
+        </div>
+        <div class="impact-card">
+          <div class="impact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="m8.5 14-1.5 7 5-2.5 5 2.5-1.5-7"/></svg>
+          </div>
+          <h3>Monitora, Projeto BASE</h3>
+          <p class="impact-org">Projeto social</p>
+          <p>Apoio a crianças em aulas de pintura digital, fotografia e desenvolvimento de soft skills.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="formacao">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">// formação</div>
+        <h2>Formação &amp; certificações</h2>
+      </div>
+      <div class="formation-grid">
+        <div>
+          <div class="edu-card">
+            <h3>Bacharelado em Ciência da Computação</h3>
+            <div class="edu-meta">CESAR School — Recife/PE</div>
+            <div class="edu-sub">2025 – 2028 · atualmente no 4º período</div>
+            <div class="chip-row">
+              <span class="chip">Fundamentos de Programação</span>
+              <span class="chip">Sistemas Digitais</span>
+              <span class="chip">Introdução à Computação</span>
+              <span class="chip">Projetos</span>
+              <span class="chip">Prog. Imperativa Funcional</span>
+              <span class="chip">Lógica para Computação</span>
+              <span class="chip">Algoritmos e Estrutura de Dados</span>
+              <span class="chip">Infraestrutura de Software</span>
+            </div>
+          </div>
+          <div class="lang-row">
+            <div class="lang-chip"><b>Português</b>Nativo</div>
+            <div class="lang-chip"><b>Inglês</b>Intermediário</div>
+          </div>
+        </div>
+        <ul class="cert-list">
+          <li class="cert-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="m8.5 14-1.5 7 5-2.5 5 2.5-1.5-7"/></svg>
+            <div><div class="cert-name">Ethereum Developer Pack 1 e 2</div><div class="cert-org">ETHKIPU em parceria com UFPE</div></div>
+          </li>
+          <li class="cert-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="m8.5 14-1.5 7 5-2.5 5 2.5-1.5-7"/></svg>
+            <div><div class="cert-name">Python Essentials 1</div><div class="cert-org">Cisco Networking Academy</div></div>
+          </li>
+          <li class="cert-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="m8.5 14-1.5 7 5-2.5 5 2.5-1.5-7"/></svg>
+            <div><div class="cert-name">JavaScript Essentials 1</div><div class="cert-org">Cisco Networking Academy</div></div>
+          </li>
+          <li class="cert-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="m8.5 14-1.5 7 5-2.5 5 2.5-1.5-7"/></svg>
+            <div><div class="cert-name">Imersão em Dados e Python com Pandas</div><div class="cert-org">Alura</div></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="comunidade">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">// comunidade</div>
+        <h2>Presença na comunidade tech</h2>
+      </div>
+      <div class="community-row">
+        <span class="event-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+          Rec'n'Play
+        </span>
+        <span class="event-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+          Tech Woman
+        </span>
+        <span class="event-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+          UFPE no Mercado
+        </span>
+        <span class="event-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+          UPE Destaca
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contato">
+    <div class="container">
+      <div class="contact-wrap">
+        <div class="contact-inner">
+          <div class="eyebrow">// contato</div>
+          <h2>Vamos conversar sobre a próxima oportunidade?</h2>
+          <p class="lede" style="margin-top:.8rem;">Estou em busca de estágio em desenvolvimento de software ou gestão de projetos. Bora trocar uma ideia?</p>
+          <div class="contact-links">
+            <a class="contact-link" href="mailto:mariaaugustahdf@gmail.com">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5h18v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-11Z"/><path d="m3 7 9 6.5L21 7"/></svg>
+              mariaaugustahdf@gmail.com
+            </a>
+            <a class="contact-link" href="tel:+5581982290044">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.9 21 3 13.1 3 3.9c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1L6.6 10.8Z"/></svg>
+              +55 81 98229-0044
+            </a>
+            <a class="contact-link" href="https://www.linkedin.com/in/mariaaugustadafonte/" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10.5v6M8 7.5v.01M12.5 16.5v-3.6c0-1.2.9-2.1 2.1-2.1s2.1.9 2.1 2.1v3.6M12.5 10.5v6"/></svg>
+              LinkedIn
+            </a>
+            <a class="contact-link" href="https://github.com/madafonte" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8 3.5 12 8 16M16 8l4.5 4-4.5 4M14 5.5l-4 13"/></svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-row" style="margin-top:2.5rem;">
+        <span class="mono">Maria Augusta Hatem da Fonte · Recife, PE, Brasil</span>
+        <span>Feito com café, curiosidade e algumas linhas de Python · <span id="year"></span></span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  (function(){
+    var toggle = document.getElementById('navToggle');
+    var links = document.getElementById('navLinks');
+    if(toggle && links){
+      toggle.addEventListener('click', function(){
+        var open = links.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      links.querySelectorAll('a').forEach(function(a){
+        a.addEventListener('click', function(){
+          links.classList.remove('open');
+          toggle.setAttribute('aria-expanded','false');
+        });
+      });
+    }
+    var year = document.getElementById('year');
+    if(year){ year.textContent = new Date().getFullYear(); }
+  })();
+</script>
