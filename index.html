@@ -245,7 +245,9 @@
     padding:.25rem .25rem 1.5rem;-webkit-overflow-scrolling:touch;
     mask-image:linear-gradient(to right, transparent 0, black 20px, black calc(100% - 20px), transparent 100%);
     -webkit-mask-image:linear-gradient(to right, transparent 0, black 20px, black calc(100% - 20px), transparent 100%);
+    scrollbar-width:none;-ms-overflow-style:none;
   }
+  .timeline::-webkit-scrollbar{display:none;}
   .timeline-item{position:relative;flex:0 0 auto;width:300px;display:flex;flex-direction:column;scroll-snap-align:start;}
   .h-rail{display:flex;align-items:center;height:16px;margin-top:1.5rem;}
   .h-rail::before,.h-rail::after{content:"";flex:1;height:2px;background:var(--line);}
@@ -567,14 +569,30 @@
             <div class="edu-meta">CESAR School — Recife/PE</div>
             <div class="edu-sub">2025 – 2028 · atualmente no 4º período</div>
             <div class="chip-row">
-              <span class="chip">Fundamentos de Programação</span>
-              <span class="chip">Sistemas Digitais</span>
               <span class="chip">Introdução à Computação</span>
-              <span class="chip">Projetos</span>
-              <span class="chip">Prog. Imperativa Funcional</span>
-              <span class="chip">Lógica para Computação</span>
+              <span class="chip">Matemática para Computação</span>
+              <span class="chip">Sistemas Digitais</span>
+              <span class="chip">Fundamentos de Programação</span>
+              <span class="chip">Projeto 1</span>
+              <span class="chip">Fund. de Projetos 1: Gestão de Pessoas</span>
+              <span class="chip">Fund. de Desenvolvimento de Software</span>
+              <span class="chip">Projeto 2</span>
+              <span class="chip">Fund. de Projetos 2: Gestão de Projetos</span>
+              <span class="chip">Programação Imperativa e Funcional</span>
+              <span class="chip">Lógica Matemática para Computação</span>
+              <span class="chip">Interfaces Humano-Computador</span>
               <span class="chip">Algoritmos e Estrutura de Dados</span>
-              <span class="chip">Infraestrutura de Software</span>
+              <span class="chip">Infraestrutura de Hardware (AOC)</span>
+              <span class="chip">Infraestrutura de Software (SO)</span>
+              <span class="chip">Projeto 3</span>
+              <span class="chip">Fund. de Projetos 3: Metodologia Científica</span>
+              <span class="chip">Programação Orientada a Objetos</span>
+              <span class="chip">Modelagem e Projeto de BD</span>
+              <span class="chip">Infraestrutura de Comunicação (RSD)</span>
+              <span class="chip">Teoria da Computação</span>
+              <span class="chip">Projeto 4</span>
+              <span class="chip">Fund. de Projetos 4: Empreendedorismo</span>
+              <span class="chip">Estatística e Probabilidade</span>
             </div>
           </div>
           <div class="lang-row">
@@ -626,6 +644,14 @@
         <span class="event-chip">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
           UPE Destaca
+        </span>
+        <span class="event-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+          Fuckup Nights
+        </span>
+        <span class="event-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+          Feira de Empreendedorismo Sebrae
         </span>
       </div>
     </div>
