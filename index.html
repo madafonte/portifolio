@@ -78,6 +78,7 @@
     background-image:radial-gradient(var(--line) 1px, transparent 1px);
     background-size:26px 26px;
   }
+  body.modal-open{overflow:hidden;}
   ::selection{background:var(--accent);color:var(--accent-ink);}
   a{color:inherit;}
   img{max-width:100%;display:block;}
@@ -716,7 +717,7 @@
       </div>
       <div class="footer-row" style="margin-top:2.5rem;">
         <span class="mono">Maria Augusta Hatem da Fonte · Recife, PE, Brasil</span>
-        <span>Feito com café, curiosidade e algumas linhas de Python · <span id="year"></span></span>
+        <span>Feito com curiosidade e algumas linhas de Python · <span id="year"></span></span>
       </div>
     </div>
   </section>
@@ -802,11 +803,13 @@
     if(modal && modalToggle && modalClose){
       var openModal = function(){
         modal.hidden = false;
+        document.body.classList.add('modal-open');
         modalClose.focus();
         document.addEventListener('keydown', onKeydown);
       };
       var closeModal = function(){
         modal.hidden = true;
+        document.body.classList.remove('modal-open');
         modalToggle.focus();
         document.removeEventListener('keydown', onKeydown);
       };
