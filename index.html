@@ -232,16 +232,41 @@
   .project-body p{color:var(--ink-dim);font-size:.95rem;}
   .project-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:auto;padding-top:.4rem;}
 
-  /* ---------- impact ---------- */
-  .impact-grid{display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:1.25rem;}
-  @media (max-width:900px){.impact-grid{grid-template-columns:1fr;}}
-  .impact-card{border:1px solid var(--line);background:var(--bg-panel);border-radius:16px;padding:1.6rem;display:flex;flex-direction:column;gap:.8rem;}
-  .impact-card.featured{background:linear-gradient(155deg, color-mix(in srgb, var(--accent-3) 16%, var(--bg-panel)), var(--bg-panel));border-color:color-mix(in srgb, var(--accent-3) 45%, var(--line));}
+  /* ---------- impact (horizontal timeline) ---------- */
+  .timeline-wrap{display:flex;align-items:center;gap:.75rem;}
+  .timeline-nav{
+    flex:none;width:42px;height:42px;border-radius:50%;border:1.5px solid var(--line);background:var(--bg-panel);
+    color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .15s,color .15s,transform .15s;
+  }
+  .timeline-nav:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px);}
+  .timeline-nav svg{width:18px;height:18px;}
+  .timeline{
+    flex:1;display:flex;gap:1.75rem;overflow-x:auto;scroll-snap-type:x proximity;scroll-padding-left:.25rem;
+    padding:.25rem .25rem 1.5rem;-webkit-overflow-scrolling:touch;
+    mask-image:linear-gradient(to right, transparent 0, black 20px, black calc(100% - 20px), transparent 100%);
+    -webkit-mask-image:linear-gradient(to right, transparent 0, black 20px, black calc(100% - 20px), transparent 100%);
+  }
+  .timeline-item{position:relative;flex:0 0 auto;width:300px;display:flex;flex-direction:column;scroll-snap-align:start;}
+  .h-rail{display:flex;align-items:center;height:16px;margin-top:1.5rem;}
+  .h-rail::before,.h-rail::after{content:"";flex:1;height:2px;background:var(--line);}
+  .timeline-item:first-child .h-rail::before{background:transparent;}
+  .timeline-item:last-child .h-rail::after{background:transparent;}
+  .timeline-dot{flex:none;width:14px;height:14px;border-radius:50%;margin:0 -1px;background:var(--accent);box-shadow:0 0 0 4px var(--bg-sunken);}
+  .timeline-dot.c2{background:var(--accent-2);}
+  .timeline-dot.c3{background:var(--accent-3);}
+  .timeline-date{font-family:var(--font-mono);font-size:.78rem;color:var(--accent);letter-spacing:.02em;margin:.6rem 0 0;font-variant-numeric:tabular-nums;}
+  .timeline-item.featured .timeline-date{color:var(--accent-3);}
+  .timeline-card{border:1px solid var(--line);background:var(--bg-panel);border-radius:16px;padding:1.4rem 1.5rem;display:flex;flex-direction:column;gap:.6rem;flex:1;}
+  .timeline-card.featured{background:linear-gradient(155deg, color-mix(in srgb, var(--accent-3) 16%, var(--bg-panel)), var(--bg-panel));border-color:color-mix(in srgb, var(--accent-3) 45%, var(--line));}
   .impact-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb, var(--accent) 14%, transparent);color:var(--accent);}
-  .impact-card.featured .impact-icon{background:color-mix(in srgb, var(--accent-3) 20%, transparent);color:var(--accent-3);}
+  .timeline-card.featured .impact-icon{background:color-mix(in srgb, var(--accent-3) 20%, transparent);color:var(--accent-3);}
   .impact-icon svg{width:19px;height:19px;}
-  .impact-card p{color:var(--ink-dim);font-size:.94rem;}
+  .timeline-card p{color:var(--ink-dim);font-size:.94rem;}
   .impact-org{font-family:var(--font-mono);font-size:.75rem;color:var(--ink-faint);}
+  @media (max-width:700px){
+    .timeline-nav{display:none;}
+    .timeline-item{width:78vw;}
+  }
 
   /* ---------- formation ---------- */
   .formation-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;}
@@ -346,7 +371,7 @@
           <h2>Quem escreve esse código</h2>
         </div>
         <p class="lede">Sou estudante de Ciência da Computação na CESAR School e estou em busca de um estágio em desenvolvimento de software ou gestão de projetos. Gosto de aprender fazendo — por isso já passei por Python, JavaScript, C e Django construindo projetos que resolvem problemas reais, do bem-estar de pets ao cálculo de impacto ambiental.</p>
-        <p class="lede">Tenho vivência com metodologias ágeis (Scrum, Kanban, XP) e um jeito organizado e colaborativo de trabalhar, construído também como monitora de Fundamentos de Programação. Ensinar é, pra mim, uma forma de aprender duas vezes — e de abrir espaço para mais mulheres na tecnologia.</p>
+        <p class="lede">Tenho vivência com metodologias ágeis (Scrum, Kanban, XP) e um jeito organizado e colaborativo de trabalhar. Ensinar é, pra mim, uma forma de aprender duas vezes — e de abrir espaço para mais mulheres na tecnologia.</p>
       </div>
       <div class="facts">
         <div class="fact">
@@ -468,31 +493,63 @@
         <h2>Passando o conhecimento adiante</h2>
         <p class="lede" style="margin-top:.6rem;">Fora do código, gosto de ensinar o que aprendo — e de abrir portas para quem vem depois.</p>
       </div>
-      <div class="impact-grid">
-        <div class="impact-card featured">
-          <div class="impact-icon">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c.6 3.7 2.3 6.4 6 7.5-3.7 1.1-5.4 3.8-6 7.5-.6-3.7-2.3-6.4-6-7.5 3.7-1.1 5.4-3.8 6-7.5Z"/></svg>
+      <div class="timeline-wrap">
+        <button class="timeline-nav" id="timelinePrev" aria-label="Ver período anterior">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+        <div class="timeline" id="timelineTrack">
+          <div class="timeline-item">
+            <div class="timeline-card">
+              <div class="impact-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8 3.5 12 8 16M16 8l4.5 4-4.5 4M14 5.5l-4 13"/></svg>
+              </div>
+              <h3>Monitora de Fundamentos de Programação</h3>
+              <p class="impact-org">CESAR School</p>
+              <p>Apoio direto a colegas de turma no entendimento de lógica de programação e na resolução de exercícios práticos.</p>
+            </div>
+            <div class="h-rail"><div class="timeline-dot"></div></div>
+            <div class="timeline-date">Fevereiro – Junho 2025</div>
           </div>
-          <h3>Extensionista, Projeto Lovelaces</h3>
-          <p class="impact-org">CESAR School</p>
-          <p>Ministrou aulas de Python para meninas do ensino médio, incentivando o interesse feminino em tecnologia.</p>
-        </div>
-        <div class="impact-card">
-          <div class="impact-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8 3.5 12 8 16M16 8l4.5 4-4.5 4M14 5.5l-4 13"/></svg>
+          <div class="timeline-item">
+            <div class="timeline-card">
+              <div class="impact-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8 3.5 12 8 16M16 8l4.5 4-4.5 4M14 5.5l-4 13"/></svg>
+              </div>
+              <h3>Monitora de Programação Imperativa Funcional</h3>
+              <p class="impact-org">CESAR School</p>
+              <p>Apoio a colegas no entendimento do paradigma funcional, com foco em comunicação, didática e trabalho colaborativo.</p>
+            </div>
+            <div class="h-rail"><div class="timeline-dot c2"></div></div>
+            <div class="timeline-date">Agosto – Novembro 2025</div>
           </div>
-          <h3>Monitora de Programação</h3>
-          <p class="impact-org">Fundamentos de Programação &amp; Programação Imperativa Funcional — CESAR School</p>
-          <p>Apoio direto a colegas de turma no entendimento de lógica de programação e paradigma funcional, e na resolução de exercícios práticos.</p>
-        </div>
-        <div class="impact-card">
-          <div class="impact-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="m8.5 14-1.5 7 5-2.5 5 2.5-1.5-7"/></svg>
+          <div class="timeline-item featured">
+            <div class="timeline-card featured">
+              <div class="impact-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c.6 3.7 2.3 6.4 6 7.5-3.7 1.1-5.4 3.8-6 7.5-.6-3.7-2.3-6.4-6-7.5 3.7-1.1 5.4-3.8 6-7.5Z"/></svg>
+              </div>
+              <h3>Extensionista, Projeto Lovelaces</h3>
+              <p class="impact-org">CESAR School</p>
+              <p>Ministrou aulas de Python para meninas do ensino médio, incentivando o interesse feminino em tecnologia.</p>
+            </div>
+            <div class="h-rail"><div class="timeline-dot c3"></div></div>
+            <div class="timeline-date">Março – Junho 2026</div>
           </div>
-          <h3>Monitora, Projeto BASE</h3>
-          <p class="impact-org">Projeto social</p>
-          <p>Apoio a crianças em aulas de pintura digital, fotografia e desenvolvimento de soft skills.</p>
+          <div class="timeline-item">
+            <div class="timeline-card">
+              <div class="impact-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="m8.5 14-1.5 7 5-2.5 5 2.5-1.5-7"/></svg>
+              </div>
+              <h3>Monitora, Projeto BASE</h3>
+              <p class="impact-org">Projeto social</p>
+              <p>Apoio a crianças em aulas de pintura digital, fotografia e desenvolvimento de soft skills.</p>
+            </div>
+            <div class="h-rail"><div class="timeline-dot"></div></div>
+            <div class="timeline-date">Julho – Agosto 2026</div>
+          </div>
         </div>
+        <button class="timeline-nav" id="timelineNext" aria-label="Ver próximo período">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
       </div>
     </div>
   </section>
@@ -627,5 +684,18 @@
     }
     var year = document.getElementById('year');
     if(year){ year.textContent = new Date().getFullYear(); }
+
+    var track = document.getElementById('timelineTrack');
+    var prev = document.getElementById('timelinePrev');
+    var next = document.getElementById('timelineNext');
+    if(track && prev && next){
+      var scrollByCard = function(dir){
+        var card = track.querySelector('.timeline-item');
+        var step = card ? card.getBoundingClientRect().width + 28 : 300;
+        track.scrollBy({left: dir * step, behavior: 'smooth'});
+      };
+      prev.addEventListener('click', function(){ scrollByCard(-1); });
+      next.addEventListener('click', function(){ scrollByCard(1); });
+    }
   })();
 </script>
