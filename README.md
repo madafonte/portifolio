@@ -20,7 +20,7 @@ Site pessoal para apresentar minha trajetória como estudante de Ciência da Com
 
 ## Acesse o site
 
-**[madafonte.github.io/portifolio](madafonte.github.io/portifolio/)**
+**[madafonte.github.io/portifolio](https://madafonte.github.io/portifolio/)**
 
 ## Contato
 
