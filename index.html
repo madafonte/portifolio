@@ -1,6 +1,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Maria Augusta Hatem da Fonte | MA.dev</title>
+<script>
+  (function(){
+    try{
+      var saved = localStorage.getItem('theme');
+      var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    }catch(e){}
+  })();
+</script>
 <style>
   :root{
     --bg:#FBF3F6;
@@ -148,6 +157,13 @@
   .nav-row{position:relative;display:flex;align-items:center;justify-content:space-between;padding-block:.9rem;}
   .brand{font-family:var(--font-mono);font-weight:700;font-size:1.05rem;text-decoration:none;color:var(--ink);letter-spacing:-.02em;}
   .brand span{color:var(--accent);}
+  .nav-actions{display:flex;align-items:center;gap:.6rem;}
+  .theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:10px;background:transparent;border:1.5px solid var(--line);color:var(--ink-dim);cursor:pointer;padding:0;transition:border-color .15s,color .15s;}
+  .theme-toggle:hover{border-color:var(--accent);color:var(--accent);}
+  .theme-toggle svg{width:18px;height:18px;}
+  .theme-toggle .icon-sun{display:none;}
+  :root[data-theme="dark"] .theme-toggle .icon-sun{display:block;}
+  :root[data-theme="dark"] .theme-toggle .icon-moon{display:none;}
 
   /* ---------- hero ---------- */
   .hero{padding:8.5rem 0 5rem;position:relative;overflow:hidden;}
@@ -356,7 +372,13 @@
         <li role="none"><a class="pill" data-path="contato" href="#contato" role="menuitem"><span class="hover-circle" aria-hidden="true"></span><span class="label-stack"><span class="pill-label">Contato</span><span class="pill-label-hover" aria-hidden="true">Contato</span></span></a></li>
       </ul>
     </nav>
-    <button class="pill-mobile-toggle" id="pill-mobile-toggle" aria-controls="pill-mobile-menu" aria-expanded="false" aria-label="Abrir menu" type="button"><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema" type="button">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M2.5 12h2.6M18.9 12h2.6M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"/></svg>
+      </button>
+      <button class="pill-mobile-toggle" id="pill-mobile-toggle" aria-controls="pill-mobile-menu" aria-expanded="false" aria-label="Abrir menu" type="button"><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
+    </div>
   </div>
   <div class="pill-mobile-menu" id="pill-mobile-menu">
     <ul>
@@ -850,6 +872,16 @@
           }, FADE_MS);
         }, TOTAL_MS);
       }
+    }
+
+    var themeToggle = document.getElementById('themeToggle');
+    if(themeToggle){
+      themeToggle.addEventListener('click', function(){
+        var current = document.documentElement.getAttribute('data-theme') || 'light';
+        var next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try{ localStorage.setItem('theme', next); }catch(e){}
+      });
     }
 
     var year = document.getElementById('year');
