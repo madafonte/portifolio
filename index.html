@@ -330,6 +330,8 @@
   .contact-link.pending:hover{transform:none;border-color:var(--line);color:var(--ink);}
   .pending-tag{font-family:var(--font-mono);font-size:.68rem;color:var(--ink-faint);}
 
+  #clickSparkCanvas{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:9999;}
+
   footer{padding:2.5rem 0 3rem;}
   .footer-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem;border-top:1px solid var(--line);padding-top:1.6rem;font-size:.82rem;color:var(--ink-faint);}
   .footer-row .mono{font-family:var(--font-mono);}
@@ -820,6 +822,77 @@
       modalClose.addEventListener('click', closeModal);
       modal.addEventListener('click', function(e){
         if(e.target === modal){ closeModal(); }
+      });
+    }
+
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(!reduceMotion){
+      var canvas = document.createElement('canvas');
+      canvas.id = 'clickSparkCanvas';
+      document.body.appendChild(canvas);
+      var ctx = canvas.getContext('2d');
+      var sparks = [];
+      var rafId = null;
+      var SPARK_COUNT = 8;
+      var SPARK_SIZE = 10;
+      var SPARK_RADIUS = 15;
+      var DURATION = 400;
+
+      var resizeCanvas = function(){
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      };
+      resizeCanvas();
+      var resizeTimer;
+      window.addEventListener('resize', function(){
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(resizeCanvas, 150);
+      });
+
+      var easeOut = function(t){ return t * (2 - t); };
+
+      var draw = function(now){
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#E31C6C';
+        sparks = sparks.filter(function(spark){
+          var elapsed = now - spark.startTime;
+          if(elapsed >= DURATION){ return false; }
+          var progress = elapsed / DURATION;
+          var eased = easeOut(progress);
+          var distance = eased * SPARK_RADIUS;
+          var lineLength = SPARK_SIZE * (1 - eased);
+          var x1 = spark.x + distance * Math.cos(spark.angle);
+          var y1 = spark.y + distance * Math.sin(spark.angle);
+          var x2 = spark.x + (distance + lineLength) * Math.cos(spark.angle);
+          var y2 = spark.y + (distance + lineLength) * Math.sin(spark.angle);
+          ctx.strokeStyle = accent;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.lineTo(x2, y2);
+          ctx.stroke();
+          return true;
+        });
+        if(sparks.length > 0){
+          rafId = requestAnimationFrame(draw);
+        } else {
+          rafId = null;
+        }
+      };
+
+      document.addEventListener('click', function(e){
+        var now = performance.now();
+        for(var i = 0; i < SPARK_COUNT; i++){
+          sparks.push({
+            x: e.clientX,
+            y: e.clientY,
+            angle: (2 * Math.PI * i) / SPARK_COUNT,
+            startTime: now
+          });
+        }
+        if(rafId === null){
+          rafId = requestAnimationFrame(draw);
+        }
       });
     }
   })();
