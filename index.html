@@ -87,6 +87,13 @@
   .container{max-width:1120px;margin:0 auto;padding:0 clamp(1.25rem,4vw,2.5rem);}
   section{scroll-margin-top:5.5rem;}
 
+  /* ---------- intro splash ---------- */
+  #intro{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;background:var(--bg);overflow:hidden;transition:opacity .5s ease;}
+  #intro-splash-canvas{position:absolute;inset:0;width:100%;height:100%;}
+  #intro-text{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:.5rem;user-select:none;}
+  #intro-greeting{font-family:var(--font-display);font-size:clamp(2.4rem,7vw,4.2rem);font-weight:700;color:var(--ink);letter-spacing:-.02em;transition:opacity .15s ease;}
+  #intro-lang{font-family:var(--font-mono);font-size:.85rem;color:var(--accent);letter-spacing:.2em;text-transform:uppercase;transition:opacity .15s ease;}
+
   .eyebrow{
     font-family:var(--font-mono);
     font-size:.8rem;
@@ -336,6 +343,14 @@
   .footer-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem;border-top:1px solid var(--line);padding-top:1.6rem;font-size:.82rem;color:var(--ink-faint);}
   .footer-row .mono{font-family:var(--font-mono);}
 </style>
+
+<div id="intro">
+  <canvas id="intro-splash-canvas"></canvas>
+  <div id="intro-text">
+    <span id="intro-greeting">Olá</span>
+    <span id="intro-lang">pt-BR</span>
+  </div>
+</div>
 
 <header class="nav">
   <div class="container nav-row">
@@ -767,8 +782,72 @@
   </div>
 </div>
 
+<script src="assets/splash-cursor.js"></script>
 <script>
   (function(){
+    var intro = document.getElementById('intro');
+    var greetingEl = document.getElementById('intro-greeting');
+    var langEl = document.getElementById('intro-lang');
+    var introReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(intro && greetingEl && langEl){
+      if(introReduceMotion){
+        intro.remove();
+      } else {
+        document.documentElement.style.overflow = 'hidden';
+
+        var greetings = [
+          { word: 'Olá', lang: 'pt-BR' },
+          { word: 'Hello', lang: 'en-US' },
+          { word: 'Hola', lang: 'es-ES' },
+          { word: 'Bonjour', lang: 'fr-FR' },
+          { word: 'Hallo', lang: 'de-DE' },
+          { word: 'Ciao', lang: 'it-IT' },
+          { word: 'こんにちは', lang: 'ja-JP' },
+          { word: '你好', lang: 'zh-CN' }
+        ];
+
+        var STEP_MS = 750;
+        var TOTAL_MS = greetings.length * STEP_MS; // 6000ms
+        var FADE_MS = 500;
+
+        var introCanvas = document.getElementById('intro-splash-canvas');
+        var destroySplash = typeof SplashCursorEffect === 'function'
+          ? SplashCursorEffect(introCanvas, {
+              RAINBOW_MODE: true,
+              AUTO_DEMO: true,
+              AUTO_DEMO_INTERVAL: 700,
+              SPLAT_RADIUS: 0.25
+            })
+          : function () {};
+
+        var introIndex = 0;
+        var introCycle = setInterval(function () {
+          introIndex++;
+          if (introIndex >= greetings.length) {
+            clearInterval(introCycle);
+            return;
+          }
+          greetingEl.style.opacity = '0';
+          langEl.style.opacity = '0';
+          setTimeout(function () {
+            greetingEl.textContent = greetings[introIndex].word;
+            langEl.textContent = greetings[introIndex].lang;
+            greetingEl.style.opacity = '1';
+            langEl.style.opacity = '1';
+          }, 150);
+        }, STEP_MS);
+
+        setTimeout(function () {
+          intro.style.opacity = '0';
+          setTimeout(function () {
+            destroySplash();
+            intro.remove();
+            document.documentElement.style.overflow = '';
+          }, FADE_MS);
+        }, TOTAL_MS);
+      }
+    }
+
     var toggle = document.getElementById('navToggle');
     var links = document.getElementById('navLinks');
     if(toggle && links){
