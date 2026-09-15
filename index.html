@@ -806,8 +806,8 @@
           { word: '你好', lang: 'zh-CN' }
         ];
 
-        var STEP_MS = 400;
-        var TOTAL_MS = 6000;
+        var STEP_MS = 750;
+        var TOTAL_MS = greetings.length * STEP_MS; // 6000ms
         var FADE_MS = 500;
 
         var introCanvas = document.getElementById('intro-splash-canvas');
@@ -822,7 +822,11 @@
 
         var introIndex = 0;
         var introCycle = setInterval(function () {
-          introIndex = (introIndex + 1) % greetings.length;
+          introIndex++;
+          if (introIndex >= greetings.length) {
+            clearInterval(introCycle);
+            return;
+          }
           greetingEl.style.opacity = '0';
           langEl.style.opacity = '0';
           setTimeout(function () {
@@ -830,11 +834,10 @@
             langEl.textContent = greetings[introIndex].lang;
             greetingEl.style.opacity = '1';
             langEl.style.opacity = '1';
-          }, 100);
+          }, 150);
         }, STEP_MS);
 
         setTimeout(function () {
-          clearInterval(introCycle);
           intro.style.opacity = '0';
           setTimeout(function () {
             destroySplash();
