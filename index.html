@@ -1,3 +1,6 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maria Augusta Hatem da Fonte | MA.dev</title>
 <style>
   :root{
     --bg:#FBF3F6;
@@ -142,22 +145,9 @@
     backdrop-filter:blur(14px);
     border-bottom:1px solid var(--line);
   }
-  .nav-row{display:flex;align-items:center;justify-content:space-between;padding-block:.9rem;}
+  .nav-row{position:relative;display:flex;align-items:center;justify-content:space-between;padding-block:.9rem;}
   .brand{font-family:var(--font-mono);font-weight:700;font-size:1.05rem;text-decoration:none;color:var(--ink);letter-spacing:-.02em;}
   .brand span{color:var(--accent);}
-  .nav-links{display:flex;align-items:center;gap:1.9rem;list-style:none;margin:0;padding:0;}
-  .nav-links a{text-decoration:none;font-size:.92rem;color:var(--ink-dim);font-weight:600;transition:color .15s;}
-  .nav-links a:hover{color:var(--accent);}
-  .nav-toggle{display:none;background:none;border:1.5px solid var(--line);border-radius:10px;width:42px;height:38px;cursor:pointer;align-items:center;justify-content:center;}
-  .nav-toggle span,.nav-toggle span::before,.nav-toggle span::after{content:"";display:block;width:18px;height:2px;background:var(--ink);position:relative;transition:transform .2s;}
-  .nav-toggle span::before{position:absolute;top:-6px;}
-  .nav-toggle span::after{position:absolute;top:6px;}
-
-  @media (max-width:760px){
-    .nav-links{position:fixed;inset:57px 0 auto 0;background:var(--bg-panel);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;padding:1.25rem clamp(1.25rem,4vw,2.5rem);gap:1.1rem;transform:translateY(-130%);opacity:0;transition:transform .25s ease, opacity .2s;}
-    .nav-links.open{transform:translateY(0);opacity:1;}
-    .nav-toggle{display:inline-flex;}
-  }
 
   /* ---------- hero ---------- */
   .hero{padding:8.5rem 0 5rem;position:relative;overflow:hidden;}
@@ -343,6 +333,7 @@
   .footer-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem;border-top:1px solid var(--line);padding-top:1.6rem;font-size:.82rem;color:var(--ink-faint);}
   .footer-row .mono{font-family:var(--font-mono);}
 </style>
+<link rel="stylesheet" href="assets/pill-nav.css">
 
 <div id="intro">
   <canvas id="intro-splash-canvas"></canvas>
@@ -355,15 +346,27 @@
 <header class="nav">
   <div class="container nav-row">
     <a class="brand" href="#top">MA<span>.</span>dev</a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#sobre">Sobre</a></li>
+    <nav class="pill-nav" id="pill-nav" aria-label="Navegação principal">
+      <ul class="pill-list" role="menubar">
+        <li role="none"><a class="pill is-active" data-path="sobre" href="#sobre" role="menuitem" aria-current="page"><span class="hover-circle" aria-hidden="true"></span><span class="label-stack"><span class="pill-label">Sobre</span><span class="pill-label-hover" aria-hidden="true">Sobre</span></span></a></li>
+        <li role="none"><a class="pill" data-path="skills" href="#skills" role="menuitem"><span class="hover-circle" aria-hidden="true"></span><span class="label-stack"><span class="pill-label">Skills</span><span class="pill-label-hover" aria-hidden="true">Skills</span></span></a></li>
+        <li role="none"><a class="pill" data-path="projetos" href="#projetos" role="menuitem"><span class="hover-circle" aria-hidden="true"></span><span class="label-stack"><span class="pill-label">Projetos</span><span class="pill-label-hover" aria-hidden="true">Projetos</span></span></a></li>
+        <li role="none"><a class="pill" data-path="impacto" href="#impacto" role="menuitem"><span class="hover-circle" aria-hidden="true"></span><span class="label-stack"><span class="pill-label">Impacto</span><span class="pill-label-hover" aria-hidden="true">Impacto</span></span></a></li>
+        <li role="none"><a class="pill" data-path="formacao" href="#formacao" role="menuitem"><span class="hover-circle" aria-hidden="true"></span><span class="label-stack"><span class="pill-label">Formação</span><span class="pill-label-hover" aria-hidden="true">Formação</span></span></a></li>
+        <li role="none"><a class="pill" data-path="contato" href="#contato" role="menuitem"><span class="hover-circle" aria-hidden="true"></span><span class="label-stack"><span class="pill-label">Contato</span><span class="pill-label-hover" aria-hidden="true">Contato</span></span></a></li>
+      </ul>
+    </nav>
+    <button class="pill-mobile-toggle" id="pill-mobile-toggle" aria-controls="pill-mobile-menu" aria-expanded="false" aria-label="Abrir menu" type="button"><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
+  </div>
+  <div class="pill-mobile-menu" id="pill-mobile-menu">
+    <ul>
+      <li><a class="is-active" href="#sobre">Sobre</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#projetos">Projetos</a></li>
       <li><a href="#impacto">Impacto</a></li>
       <li><a href="#formacao">Formação</a></li>
       <li><a href="#contato">Contato</a></li>
     </ul>
-    <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false"><span></span></button>
   </div>
 </header>
 
@@ -783,6 +786,7 @@
 </div>
 
 <script src="assets/splash-cursor.js"></script>
+<script src="assets/pill-nav.js"></script>
 <script>
   (function(){
     var intro = document.getElementById('intro');
@@ -848,20 +852,6 @@
       }
     }
 
-    var toggle = document.getElementById('navToggle');
-    var links = document.getElementById('navLinks');
-    if(toggle && links){
-      toggle.addEventListener('click', function(){
-        var open = links.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      });
-      links.querySelectorAll('a').forEach(function(a){
-        a.addEventListener('click', function(){
-          links.classList.remove('open');
-          toggle.setAttribute('aria-expanded','false');
-        });
-      });
-    }
     var year = document.getElementById('year');
     if(year){ year.textContent = new Date().getFullYear(); }
 
