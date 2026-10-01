@@ -7,7 +7,7 @@ Site pessoal para apresentar minha trajetória como estudante de Ciência da Com
 - **Início** — apresentação rápida, status de disponibilidade e uma amostra da minha stack em forma de código.
 - **Sobre** — um pouco da minha formação, foco de carreira e forma de trabalhar.
 - **Skills** — linguagens, frontend, dados e ferramentas que uso no dia a dia.
-- **Projetos** — Vida Pet, Site do Jornal do Commercio, RE:PLAY e Card0.
+- **Projetos** — Vida Pet, Site do Jornal do Commercio, RE:PLAY, Card0 e Resumo Diário de Processos Seletivos.
 - **Impacto** — monitorias e extensão, incluindo o Projeto Lovelaces, incentivando meninas na tecnologia.
 - **Formação & certificações** — CESAR School e certificações complementares.
 - **Contato** — e-mail, telefone, LinkedIn e GitHub.
