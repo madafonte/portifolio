@@ -1,6 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Maria Augusta Hatem da Fonte | MA.dev</title>
+<meta name="description" content="Portfólio de Maria Augusta Hatem da Fonte, estudante de Ciência da Computação na CESAR School, em busca de estágio em desenvolvimento de software ou gestão de projetos.">
+<meta name="author" content="Maria Augusta Hatem da Fonte">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Maria Augusta Hatem da Fonte | MA.dev">
+<meta property="og:description" content="Estudante de Ciência da Computação (CESAR School), fundadora da Sollie e em busca de estágio em desenvolvimento de software ou gestão de projetos.">
+<meta property="og:url" content="https://madafonte.github.io/portifolio/">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#E31C6C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23E31C6C'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='28' font-weight='700' text-anchor='middle' fill='white'%3EMA%3C/text%3E%3C/svg%3E">
 <script>
   (function(){
     try{
@@ -189,7 +202,7 @@
   .hero .lede{margin-top:1.4rem;}
   .hero-ctas{display:flex;gap:.9rem;flex-wrap:wrap;margin-top:2.1rem;}
 
-  .stat-row{display:flex;gap:1.9rem;flex-wrap:wrap;margin-top:2.6rem;padding-top:1.8rem;border-top:1px solid var(--line);}
+  .stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:1.4rem 1.5rem;margin-top:2.6rem;padding-top:1.8rem;border-top:1px solid var(--line);}
   .stat-num{font-family:var(--font-mono);font-weight:700;font-size:1.25rem;color:var(--ink);font-variant-numeric:tabular-nums;display:block;}
   .stat-label{font-size:.78rem;color:var(--ink-faint);}
 
@@ -350,6 +363,8 @@
   .footer-row .mono{font-family:var(--font-mono);}
 </style>
 <link rel="stylesheet" href="assets/pill-nav.css">
+</head>
+<body>
 
 <div id="intro">
   <canvas id="intro-splash-canvas"></canvas>
@@ -401,7 +416,7 @@
         <div class="status-pill"><span class="status-dot"></span>Disponível para estágio · Recife, PE</div>
         <h1><span style="color:var(--accent)">Maria Augusta</span><br>Hatem da Fonte</h1>
         <p class="tagline">Código com propósito, feito com <em>estilo</em>.</p>
-        <p class="lede">Estudante de Ciência da Computação na CESAR School, no 4º período, em busca de estágio em desenvolvimento de software ou gestão de projetos. Transformo lógica em ferramentas que resolvem problemas reais — de sistemas Django a jogos em C.</p>
+        <p class="lede">Estudante de Ciência da Computação na CESAR School, no 4º período, fundadora da startup agtech Sollie e em busca de estágio em desenvolvimento de software ou gestão de projetos. Transformo lógica em ferramentas que resolvem problemas reais — de sistemas Django a jogos em C.</p>
         <div class="hero-ctas">
           <a class="btn btn-solid" href="#projetos">Ver projetos
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18 18 6M9 6h9v9"/></svg>
@@ -413,8 +428,9 @@
         </div>
         <div class="stat-row">
           <div><span class="stat-num">4º</span><span class="stat-label">período · CESAR School</span></div>
-          <div><span class="stat-num">5+</span><span class="stat-label">projetos práticos</span></div>
+          <div><span class="stat-num">7</span><span class="stat-label">projetos práticos</span></div>
           <div><span class="stat-num">4</span><span class="stat-label">monitorias e extensão</span></div>
+          <div><span class="stat-num">65h+</span><span class="stat-label">em certificações</span></div>
           <div><span class="stat-num">PT / EN</span><span class="stat-label">nativo · intermediário</span></div>
         </div>
       </div>
@@ -426,7 +442,7 @@
         <div class="code-body"><span class="tok-kw">class</span> <span class="tok-fn">Maria</span>(Dev):
     <span class="tok-kw">def</span> <span class="tok-fn">__init__</span>(<span class="tok-var">self</span>):
         <span class="tok-var">self</span>.periodo = <span class="tok-str">"4º"</span>
-        <span class="tok-var">self</span>.stack = [<span class="tok-str">"Python"</span>, <span class="tok-str">"React"</span>, <span class="tok-str">"Django"</span>]
+        <span class="tok-var">self</span>.stack = [<span class="tok-str">"Python"</span>, <span class="tok-str">"TypeScript"</span>, <span class="tok-str">"Django"</span>, <span class="tok-str">"SQL"</span>]
         <span class="tok-var">self</span>.foco = <span class="tok-str">"produto + impacto social"</span>
 
     <span class="tok-kw">def</span> <span class="tok-fn">disponivel</span>(<span class="tok-var">self</span>):
@@ -443,7 +459,7 @@
           <div class="eyebrow">// sobre</div>
           <h2>Quem escreve esse código</h2>
         </div>
-        <p class="lede">Sou estudante de Ciência da Computação na CESAR School e estou em busca de um estágio em desenvolvimento de software ou gestão de projetos. Gosto de aprender fazendo — por isso já passei por Python, JavaScript, C e Django construindo projetos que resolvem problemas reais, do bem-estar de pets ao cálculo de impacto ambiental.</p>
+        <p class="lede">Sou estudante de Ciência da Computação na CESAR School e estou em busca de um estágio em desenvolvimento de software ou gestão de projetos. Fundei a Sollie, uma startup agtech que passou pela pré-incubação do Porto Digital. Gosto de aprender fazendo — por isso já passei por Python, JavaScript, TypeScript, Java, SQL, C e Django construindo projetos que resolvem problemas reais, do bem-estar de pets ao cálculo de impacto ambiental.</p>
         <p class="lede">Tenho vivência com metodologias ágeis (Scrum, Kanban, XP) e um jeito organizado e colaborativo de trabalhar. Ensinar é, pra mim, uma forma de aprender duas vezes — e de abrir espaço para mais mulheres na tecnologia.</p>
       </div>
       <div class="facts">
@@ -473,7 +489,7 @@
         <div class="skill-card">
           <h3>Linguagens</h3>
           <div class="chip-row">
-            <span class="chip">Python</span><span class="chip">JavaScript</span><span class="chip">TypeScript</span><span class="chip">Java</span><span class="chip">C</span><span class="chip">SQL</span>
+            <span class="chip">Python</span><span class="chip">JavaScript</span><span class="chip">TypeScript</span><span class="chip">Java</span><span class="chip">C</span><span class="chip">SQL</span><span class="chip">Solidity</span>
           </div>
         </div>
         <div class="skill-card">
@@ -514,7 +530,7 @@
               Fundadora · Pré-incubação Porto Digital
             </div>
             <h3>Sollie — Agricultura Inteligente na Palma da Mão</h3>
-            <p>Startup agtech que ajuda pequenos e médios agricultores a tomar decisões técnicas e financeiras melhores, unindo uma IA especializada (a Mudinha IA), mapeamento do terreno, calendário agrícola e gestão financeira em um só app. Selecionada para o programa de pré-incubação do Porto Digital.</p>
+            <p>Startup agtech (encerrada) que ajudava pequenos e médios agricultores a tomar decisões técnicas e financeiras melhores, unindo uma IA especializada (a Mudinha IA), mapeamento do terreno, calendário agrícola e gestão financeira em um só app. Selecionada para o programa de pré-incubação do Porto Digital.</p>
             <div class="project-tags">
               <span class="chip date">Abr – Ago 2026</span>
               <span class="chip">Agtech</span>
@@ -591,7 +607,7 @@
               Equipe de 6 · Banco de Dados
             </div>
             <h3>UpTown — Marketplace de Roupas</h3>
-            <p>Aplicação web que reúne em um único banco de dados o catálogo, fornecedores, clientes e pedidos de uma marca de roupas. Modelo com 13 tabelas em MySQL, backend em Java com JDBC e SQL escrito à mão (CTE recursiva e funções de janela), cadastros completos, 8 consultas e dashboard com 6 gráficos.</p>
+            <p>Projeto da disciplina de Banco de Dados: aplicação web que reúne em um único banco o catálogo, fornecedores, clientes e pedidos de uma marca de roupas. Modelo com 13 tabelas em MySQL, backend em Java com JDBC e SQL escrito à mão, sem ORM (CTE recursiva e funções de janela), cadastros completos, 8 consultas e dashboard com 6 gráficos.</p>
             <div class="project-tags"><span class="chip">MySQL</span><span class="chip">Java</span><span class="chip">JDBC</span><span class="chip">Javalin</span><span class="chip">Chart.js</span><span class="chip">Dashboard</span></div>
           </div>
         </article>
@@ -629,7 +645,7 @@
               <div class="impact-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8 3.5 12 8 16M16 8l4.5 4-4.5 4M14 5.5l-4 13"/></svg>
               </div>
-              <h3>Monitora de Programação Imperativa Funcional</h3>
+              <h3>Monitora de Programação Imperativa e Funcional</h3>
               <p class="impact-org">CESAR School</p>
               <p>Apoio a colegas no entendimento do paradigma funcional, com foco em comunicação, didática e trabalho colaborativo.</p>
             </div>
@@ -685,7 +701,7 @@
               <span class="chip">Sistemas Digitais</span>
               <span class="chip">Introdução à Computação</span>
               <span class="chip">Projetos</span>
-              <span class="chip">Prog. Imperativa Funcional</span>
+              <span class="chip">Prog. Imperativa e Funcional</span>
               <span class="chip">Lógica para Computação</span>
               <span class="chip">Algoritmos e Estrutura de Dados</span>
               <span class="chip">Infraestrutura de Software</span>
@@ -1037,3 +1053,5 @@
     }
   })();
 </script>
+</body>
+</html>
