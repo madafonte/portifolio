@@ -265,6 +265,37 @@
   .project-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:auto;padding-top:.4rem;}
   .chip.date{color:var(--accent-3);border-color:color-mix(in srgb, var(--accent-3) 40%, var(--line));}
 
+  /* ---------- drift wall (projetos) ---------- */
+  .drift-wall-wrap{display:none;}
+  .drift-wall{
+    --dw-w:300px;--dw-h:190px;--dw-gap:18px;
+    position:relative;width:100%;height:660px;overflow:hidden;
+    perspective:1200px;perspective-origin:50% 50%;
+    -webkit-mask-image:radial-gradient(ellipse 82% 86% at 50% 48%, #000 48%, transparent 100%);
+    mask-image:radial-gradient(ellipse 82% 86% at 50% 48%, #000 48%, transparent 100%);
+  }
+  .dw-plane{position:absolute;top:50%;left:50%;display:flex;transform-style:preserve-3d;transform-origin:50% 50%;will-change:transform;cursor:pointer;}
+  .dw-col{position:relative;width:calc(var(--dw-w) + var(--dw-gap));transform-style:preserve-3d;}
+  .dw-track{display:flex;flex-direction:column;transform-style:preserve-3d;will-change:transform;}
+  .dw-tile{position:relative;display:block;height:calc(var(--dw-h) + var(--dw-gap));flex:0 0 auto;outline:none;transform-style:preserve-3d;}
+  .dw-inner{
+    position:absolute;inset:calc(var(--dw-gap) / 2);display:flex;flex-direction:column;gap:.5rem;
+    padding:1.05rem 1.15rem;border-radius:16px;border:1px solid var(--line);background:var(--bg-panel);
+    overflow:hidden;opacity:.8;transform:translateZ(0);pointer-events:none;
+    transition:transform .42s cubic-bezier(.22,1,.36,1), opacity .42s cubic-bezier(.22,1,.36,1), box-shadow .42s cubic-bezier(.22,1,.36,1), border-color .2s;
+  }
+  .dw-tile.is-active .dw-inner,.dw-tile:focus-visible .dw-inner{
+    opacity:1;transform:translateZ(48px);border-color:var(--accent);box-shadow:0 24px 50px -20px var(--shadow);
+  }
+  .dw-kicker{font-family:var(--font-mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);}
+  .dw-title{font-family:var(--font-display);font-size:1.02rem;line-height:1.25;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+  .dw-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:auto;}
+  .dw-tags .chip{font-size:.7rem;padding:.25rem .5rem;}
+  .drift-wall-hint{text-align:center;font-family:var(--font-mono);font-size:.78rem;color:var(--ink-faint);margin-top:.5rem;}
+  .project-modal-kicker{font-family:var(--font-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:.3rem;}
+  .project-modal-desc{color:var(--ink-dim);line-height:1.65;}
+  .project-modal-tags{margin-top:1.2rem;}
+
   /* ---------- impact (horizontal timeline) ---------- */
   .timeline-wrap{display:flex;align-items:center;gap:.75rem;}
   .timeline-nav{
@@ -532,6 +563,10 @@
         <div class="eyebrow">// projetos</div>
         <h2>O que eu já construí</h2>
         <p class="lede" style="margin-top:.6rem;">Uma amostra de projetos pessoais e em equipe — do backend ao pixel.</p>
+      </div>
+      <div class="drift-wall-wrap" id="driftWallWrap">
+        <div class="drift-wall" id="driftWall" role="group" aria-label="Parede animada de projetos"></div>
+        <p class="drift-wall-hint">Passe o mouse para pausar · clique em um projeto para ver os detalhes</p>
       </div>
       <div class="project-grid">
 
@@ -886,6 +921,24 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="projectModal" hidden>
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle">
+    <div class="modal-head">
+      <div>
+        <div class="project-modal-kicker" id="projectModalKicker"></div>
+        <h3 id="projectModalTitle"></h3>
+      </div>
+      <button type="button" class="modal-close" id="projectModalClose" aria-label="Fechar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p class="project-modal-desc" id="projectModalDesc"></p>
+      <div class="chip-row project-modal-tags" id="projectModalTags"></div>
+    </div>
+  </div>
+</div>
+
 <script src="assets/splash-cursor.js"></script>
 <script src="assets/pill-nav.js"></script>
 <script>
@@ -963,7 +1016,227 @@
       });
     }
 
-    var ICON_COPY = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>';
+    /* ---------- drift wall dos projetos (porta vanilla do React Bits Drift Wall) ---------- */
+    var wallWrap = document.getElementById('driftWallWrap');
+    var wallEl = document.getElementById('driftWall');
+    var projectGrid = document.querySelector('.project-grid');
+    var projectModal = document.getElementById('projectModal');
+    if(wallWrap && wallEl && projectGrid){
+      var WALL = {cols: 4, tileW: 300, tileH: 190, gap: 18, speed: 34, variance: 0.4, tilt: 14, turn: -12, depth: 100, parallax: 0.6};
+      var projects = Array.prototype.map.call(projectGrid.querySelectorAll('.project-card'), function(card){
+        var kicker = card.querySelector('.project-kicker');
+        var desc = card.querySelector('.project-body > p');
+        return {
+          kicker: kicker ? kicker.textContent.trim() : '',
+          title: card.querySelector('h3').textContent.trim(),
+          desc: desc ? desc.textContent.trim() : '',
+          tags: Array.prototype.map.call(card.querySelectorAll('.project-tags .chip'), function(c){
+            return {text: c.textContent.trim(), date: c.classList.contains('date')};
+          })
+        };
+      });
+
+      var wallPlane = null, wallTracks = [], wallMeta = [], wallOffsets = [], wallVels = [], wallBase = [];
+      var wallHoverCol = -1, wallHovered = false, wallActive = null, wallActiveEl = null;
+      var wallRaf = null, wallLast = null, wallBuilt = false;
+      var wallPtr = {x: 0, y: 0}, wallPtrD = {x: 0, y: 0};
+
+      var chipEl = function(t){
+        var s = document.createElement('span');
+        s.className = 'chip' + (t.date ? ' date' : '');
+        s.textContent = t.text;
+        return s;
+      };
+
+      var makeTile = function(p, id, col, pIndex){
+        var t = document.createElement('div');
+        t.className = 'dw-tile';
+        t.tabIndex = 0;
+        t.setAttribute('role', 'button');
+        t.setAttribute('aria-label', p.title + ' — ver detalhes');
+        t.dataset.tileId = id;
+        t.dataset.col = col;
+        t.dataset.p = pIndex;
+        var inner = document.createElement('span');
+        inner.className = 'dw-inner';
+        var k = document.createElement('span');
+        k.className = 'dw-kicker';
+        k.textContent = p.kicker;
+        var h = document.createElement('strong');
+        h.className = 'dw-title';
+        h.textContent = p.title;
+        var tags = document.createElement('span');
+        tags.className = 'dw-tags';
+        p.tags.slice(0, 3).forEach(function(tg){ tags.appendChild(chipEl(tg)); });
+        inner.appendChild(k);
+        inner.appendChild(h);
+        inner.appendChild(tags);
+        t.appendChild(inner);
+        return t;
+      };
+
+      var buildWall = function(){
+        var unit = WALL.tileH + WALL.gap;
+        var height = wallEl.clientHeight || 660;
+        var cols = [];
+        for(var c = 0; c < WALL.cols; c++){ cols.push([]); }
+        projects.forEach(function(p, i){ cols[i % WALL.cols].push(i); });
+        cols = cols.map(function(col){ return col.length ? col : [0]; });
+
+        wallEl.style.setProperty('--dw-w', WALL.tileW + 'px');
+        wallEl.style.setProperty('--dw-h', WALL.tileH + 'px');
+        wallEl.style.setProperty('--dw-gap', WALL.gap + 'px');
+
+        wallPlane = document.createElement('div');
+        wallPlane.className = 'dw-plane';
+        wallTracks = [];
+        wallMeta = [];
+        wallOffsets = [];
+        wallVels = [];
+        wallBase = [];
+
+        cols.forEach(function(col, c){
+          var copyHeight = Math.max(unit, col.length * unit);
+          var copies = Math.max(2, Math.ceil((height * 1.6) / copyHeight) + 1);
+          wallMeta.push({copyHeight: copyHeight});
+          wallOffsets.push(copyHeight * ((c * 0.37) % 1));
+          wallVels.push(0);
+          var pseudo = ((c * 0.6180339887 + 0.35) % 1) * 2 - 1;
+          var sign = c % 2 === 0 ? 1 : -1;
+          wallBase.push(WALL.speed * (1 + WALL.variance * pseudo) * sign);
+
+          var colEl = document.createElement('div');
+          colEl.className = 'dw-col';
+          var track = document.createElement('div');
+          track.className = 'dw-track';
+          for(var k = 0; k < copies; k++){
+            col.forEach(function(pIndex, j){
+              track.appendChild(makeTile(projects[pIndex], c + '-' + k + '-' + j, c, pIndex));
+            });
+          }
+          colEl.appendChild(track);
+          wallPlane.appendChild(colEl);
+          wallTracks.push(track);
+        });
+        wallEl.appendChild(wallPlane);
+        wallBuilt = true;
+      };
+
+      var setPlane = function(px, py){
+        wallPlane.style.transform = 'translate(-50%, -50%) scale(1.18) rotateX(' + (WALL.tilt + py) + 'deg) rotateY(' + (WALL.turn + px) + 'deg) translateZ(' + (-WALL.depth) + 'px)';
+      };
+
+      var wallFrame = function(ts){
+        if(wallLast === null){ wallLast = ts; }
+        var dt = Math.min(0.05, Math.max(0, ts - wallLast) / 1000);
+        wallLast = ts;
+        var maxTilt = WALL.parallax * 8;
+        var damp = 1 - Math.exp(-dt / 0.12);
+        wallPtrD.x += (wallPtr.x * maxTilt - wallPtrD.x) * damp;
+        wallPtrD.y += (-wallPtr.y * maxTilt - wallPtrD.y) * damp;
+        setPlane(wallPtrD.x, wallPtrD.y);
+        for(var c = 0; c < wallTracks.length; c++){
+          var paused = wallHovered || wallHoverCol === c || (projectModal && !projectModal.hidden);
+          var target = paused ? 0 : wallBase[c];
+          var ease = 1 - Math.exp(-dt / (target === 0 ? 0.16 : 0.28));
+          wallVels[c] += (target - wallVels[c]) * ease;
+          var h = wallMeta[c].copyHeight;
+          var next = (((wallOffsets[c] + wallVels[c] * dt) % h) + h) % h;
+          wallOffsets[c] = next;
+          wallTracks[c].style.transform = 'translate3d(0,' + (-next) + 'px,0)';
+        }
+        wallRaf = requestAnimationFrame(wallFrame);
+      };
+
+      var setActive = function(tile){
+        if(wallActiveEl){ wallActiveEl.classList.remove('is-active'); }
+        wallActiveEl = tile;
+        wallActive = tile ? tile.dataset.tileId : null;
+        wallHoverCol = tile ? Number(tile.dataset.col) : -1;
+        if(tile){ tile.classList.add('is-active'); }
+      };
+
+      wallEl.addEventListener('pointerenter', function(){ wallHovered = true; });
+      wallEl.addEventListener('pointermove', function(e){
+        var rect = wallEl.getBoundingClientRect();
+        wallPtr.x = (e.clientX - rect.left) / rect.width - 0.5;
+        wallPtr.y = (e.clientY - rect.top) / rect.height - 0.5;
+        var hit = document.elementFromPoint(e.clientX, e.clientY);
+        var tile = hit && hit.closest ? hit.closest('.dw-tile') : null;
+        if(tile && tile.dataset.tileId !== wallActive){ setActive(tile); }
+      });
+      wallEl.addEventListener('pointerleave', function(){
+        wallHovered = false;
+        wallPtr.x = 0;
+        wallPtr.y = 0;
+        setActive(null);
+      });
+      wallEl.addEventListener('focusin', function(e){
+        var tile = e.target.closest ? e.target.closest('.dw-tile') : null;
+        if(tile){ setActive(tile); }
+      });
+      wallEl.addEventListener('focusout', function(){ setActive(null); });
+
+      var modalPrevFocus = null;
+      var closeProject = function(){
+        projectModal.hidden = true;
+        document.body.classList.remove('modal-open');
+        document.removeEventListener('keydown', onProjectKey);
+        if(modalPrevFocus && modalPrevFocus.focus){ modalPrevFocus.focus(); }
+      };
+      var onProjectKey = function(e){ if(e.key === 'Escape'){ closeProject(); } };
+      var openProject = function(index, fromEl){
+        var p = projects[index];
+        if(!p || !projectModal){ return; }
+        modalPrevFocus = fromEl;
+        document.getElementById('projectModalKicker').textContent = p.kicker;
+        document.getElementById('projectModalTitle').textContent = p.title;
+        document.getElementById('projectModalDesc').textContent = p.desc;
+        var tagBox = document.getElementById('projectModalTags');
+        tagBox.textContent = '';
+        p.tags.forEach(function(tg){ tagBox.appendChild(chipEl(tg)); });
+        projectModal.hidden = false;
+        document.body.classList.add('modal-open');
+        document.getElementById('projectModalClose').focus();
+        document.addEventListener('keydown', onProjectKey);
+      };
+      if(projectModal){
+        document.getElementById('projectModalClose').addEventListener('click', closeProject);
+        projectModal.addEventListener('click', function(e){ if(e.target === projectModal){ closeProject(); } });
+      }
+      wallEl.addEventListener('click', function(e){
+        var tile = e.target.closest ? e.target.closest('.dw-tile') : null;
+        if(tile){ openProject(Number(tile.dataset.p), tile); }
+      });
+      wallEl.addEventListener('keydown', function(e){
+        if(e.key !== 'Enter' && e.key !== ' '){ return; }
+        var tile = e.target.closest ? e.target.closest('.dw-tile') : null;
+        if(tile){ e.preventDefault(); openProject(Number(tile.dataset.p), tile); }
+      });
+
+      var mqWide = window.matchMedia('(min-width: 821px)');
+      var mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var syncWall = function(){
+        var on = mqWide.matches && !mqReduce.matches;
+        if(on){
+          wallWrap.style.display = 'block';
+          projectGrid.style.display = 'none';
+          if(!wallBuilt){ buildWall(); }
+          if(wallRaf === null){ wallLast = null; wallRaf = requestAnimationFrame(wallFrame); }
+        } else {
+          wallWrap.style.display = '';
+          projectGrid.style.display = '';
+          if(wallRaf !== null){ cancelAnimationFrame(wallRaf); wallRaf = null; }
+        }
+      };
+      if(mqWide.addEventListener){
+        mqWide.addEventListener('change', syncWall);
+        mqReduce.addEventListener('change', syncWall);
+      }
+      syncWall();
+    }
+
+    var ICON_COPY ='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>';
     var ICON_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
     var copyText = function(text){
       if(navigator.clipboard && navigator.clipboard.writeText){
