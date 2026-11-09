@@ -248,6 +248,19 @@
     border:1px solid var(--line);border-radius:8px;padding:.4rem .7rem;background:var(--bg);
   }
 
+  /* ---------- chroma grid (spotlight de cor nos cards) ---------- */
+  .chroma-root{--chroma-x:-9999px;--chroma-y:-9999px;--chroma-power:0;--chroma-r:260px;--chroma-glow:.5;--chroma-border:1;position:relative;}
+  .chroma-card{position:relative;overflow:hidden;isolation:isolate;}
+  .chroma-card > :not(.chroma-wash):not(.chroma-card-glow){position:relative;z-index:1;}
+  .chroma-wash,.chroma-card-glow{
+    position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+    -webkit-mask-image:radial-gradient(circle var(--chroma-r) at calc(var(--chroma-x) - var(--chroma-ox, 0px)) calc(var(--chroma-y) - var(--chroma-oy, 0px)), var(--chroma-stops, #000, transparent));
+    mask-image:radial-gradient(circle var(--chroma-r) at calc(var(--chroma-x) - var(--chroma-ox, 0px)) calc(var(--chroma-y) - var(--chroma-oy, 0px)), var(--chroma-stops, #000, transparent));
+  }
+  .chroma-wash{z-index:0;background:radial-gradient(130% 70% at 50% 100%, var(--chroma-accent), transparent 72%);opacity:calc(var(--chroma-glow) * var(--chroma-power) * 0.7);}
+  .chroma-card-glow{z-index:2;box-shadow:inset 0 0 0 1.5px var(--chroma-accent), inset 0 0 18px -8px var(--chroma-accent);opacity:calc(var(--chroma-border) * var(--chroma-power));}
+  @media (hover:none){.chroma-wash,.chroma-card-glow{display:none;}}
+
   /* ---------- projects ---------- */
   .project-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
   @media (max-width:820px){.project-grid{grid-template-columns:1fr;}}
@@ -264,37 +277,6 @@
   .project-body p{color:var(--ink-dim);font-size:.95rem;}
   .project-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:auto;padding-top:.4rem;}
   .chip.date{color:var(--accent-3);border-color:color-mix(in srgb, var(--accent-3) 40%, var(--line));}
-
-  /* ---------- drift wall (projetos) ---------- */
-  .drift-wall-wrap{display:none;}
-  .drift-wall{
-    --dw-w:300px;--dw-h:190px;--dw-gap:18px;
-    position:relative;width:100%;height:660px;overflow:hidden;
-    perspective:1200px;perspective-origin:50% 50%;
-    -webkit-mask-image:radial-gradient(ellipse 82% 86% at 50% 48%, #000 48%, transparent 100%);
-    mask-image:radial-gradient(ellipse 82% 86% at 50% 48%, #000 48%, transparent 100%);
-  }
-  .dw-plane{position:absolute;top:50%;left:50%;display:flex;transform-style:preserve-3d;transform-origin:50% 50%;will-change:transform;cursor:pointer;}
-  .dw-col{position:relative;width:calc(var(--dw-w) + var(--dw-gap));transform-style:preserve-3d;}
-  .dw-track{display:flex;flex-direction:column;transform-style:preserve-3d;will-change:transform;}
-  .dw-tile{position:relative;display:block;height:calc(var(--dw-h) + var(--dw-gap));flex:0 0 auto;outline:none;transform-style:preserve-3d;}
-  .dw-inner{
-    position:absolute;inset:calc(var(--dw-gap) / 2);display:flex;flex-direction:column;gap:.5rem;
-    padding:1.05rem 1.15rem;border-radius:16px;border:1px solid var(--line);background:var(--bg-panel);
-    overflow:hidden;opacity:.8;transform:translateZ(0);pointer-events:none;
-    transition:transform .42s cubic-bezier(.22,1,.36,1), opacity .42s cubic-bezier(.22,1,.36,1), box-shadow .42s cubic-bezier(.22,1,.36,1), border-color .2s;
-  }
-  .dw-tile.is-active .dw-inner,.dw-tile:focus-visible .dw-inner{
-    opacity:1;transform:translateZ(48px);border-color:var(--accent);box-shadow:0 24px 50px -20px var(--shadow);
-  }
-  .dw-kicker{font-family:var(--font-mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);}
-  .dw-title{font-family:var(--font-display);font-size:1.02rem;line-height:1.25;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
-  .dw-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:auto;}
-  .dw-tags .chip{font-size:.7rem;padding:.25rem .5rem;}
-  .drift-wall-hint{text-align:center;font-family:var(--font-mono);font-size:.78rem;color:var(--ink-faint);margin-top:.5rem;}
-  .project-modal-kicker{font-family:var(--font-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:.3rem;}
-  .project-modal-desc{color:var(--ink-dim);line-height:1.65;}
-  .project-modal-tags{margin-top:1.2rem;}
 
   /* ---------- impact (horizontal timeline) ---------- */
   .timeline-wrap{display:flex;align-items:center;gap:.75rem;}
@@ -502,7 +484,7 @@
           <div class="eyebrow">// sobre</div>
           <h2>Quem escreve esse código</h2>
         </div>
-        <p class="lede">Sou estudante de Ciência da Computação na CESAR School e estou em busca de um estágio em desenvolvimento de software ou gestão de projetos. Fundei a Sollie, uma startup agtech que passou pela pré-incubação do Porto Digital. Gosto de aprender fazendo — por isso já passei por Python, JavaScript, TypeScript, Java, SQL, C e Django construindo projetos que resolvem problemas reais, do bem-estar de pets ao cálculo de impacto ambiental.</p>
+        <p class="lede">Sou estudante de Ciência da Computação na CESAR School e estou em busca de um estágio em desenvolvimento de software ou gestão de projetos. Fundei a Sollie, uma startup agtech que foi selecionada para o Sertão Inovador e para a pré-incubação do Porto Digital. Gosto de aprender fazendo — por isso já passei por Python, JavaScript, TypeScript, Java, SQL, C e Django construindo projetos que resolvem problemas reais, do bem-estar de pets ao cálculo de impacto ambiental.</p>
         <p class="lede">Tenho vivência com metodologias ágeis (Scrum, Kanban, XP) e um jeito organizado e colaborativo de trabalhar. Ensinar é, pra mim, uma forma de aprender duas vezes — e de abrir espaço para mais mulheres na tecnologia.</p>
       </div>
       <div class="facts">
@@ -564,10 +546,6 @@
         <h2>O que eu já construí</h2>
         <p class="lede" style="margin-top:.6rem;">Uma amostra de projetos pessoais e em equipe — do backend ao pixel.</p>
       </div>
-      <div class="drift-wall-wrap" id="driftWallWrap">
-        <div class="drift-wall" id="driftWall" role="group" aria-label="Parede animada de projetos"></div>
-        <p class="drift-wall-hint">Passe o mouse para pausar · clique em um projeto para ver os detalhes</p>
-      </div>
       <div class="project-grid">
 
         <article class="project-card featured">
@@ -577,7 +555,7 @@
               Fundadora · Pré-incubação Porto Digital
             </div>
             <h3>Sollie — Agricultura Inteligente na Palma da Mão</h3>
-            <p>Startup agtech (encerrada) que ajudava pequenos e médios agricultores a tomar decisões técnicas e financeiras melhores, unindo uma IA especializada (a Mudinha IA), mapeamento do terreno, calendário agrícola e gestão financeira em um só app. Selecionada para o programa de pré-incubação do Porto Digital.</p>
+            <p>Startup agtech (encerrada) que ajudava pequenos e médios agricultores a tomar decisões técnicas e financeiras melhores, unindo uma IA especializada (a Mudinha IA), mapeamento do terreno, calendário agrícola e gestão financeira em um só app. Selecionada para os programas de pré-incubação do Porto Digital e do Sertão Inovador.</p>
             <div class="project-tags">
               <span class="chip date">Abr – Ago 2026</span>
               <span class="chip">Agtech</span>
@@ -921,24 +899,6 @@
   </div>
 </div>
 
-<div class="modal-overlay" id="projectModal" hidden>
-  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle">
-    <div class="modal-head">
-      <div>
-        <div class="project-modal-kicker" id="projectModalKicker"></div>
-        <h3 id="projectModalTitle"></h3>
-      </div>
-      <button type="button" class="modal-close" id="projectModalClose" aria-label="Fechar">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
-      </button>
-    </div>
-    <div class="modal-body">
-      <p class="project-modal-desc" id="projectModalDesc"></p>
-      <div class="chip-row project-modal-tags" id="projectModalTags"></div>
-    </div>
-  </div>
-</div>
-
 <script src="assets/splash-cursor.js"></script>
 <script src="assets/pill-nav.js"></script>
 <script>
@@ -1016,225 +976,99 @@
       });
     }
 
-    /* ---------- drift wall dos projetos (porta vanilla do React Bits Drift Wall) ---------- */
-    var wallWrap = document.getElementById('driftWallWrap');
-    var wallEl = document.getElementById('driftWall');
-    var projectGrid = document.querySelector('.project-grid');
-    var projectModal = document.getElementById('projectModal');
-    if(wallWrap && wallEl && projectGrid){
-      var WALL = {cols: 4, tileW: 300, tileH: 190, gap: 18, speed: 34, variance: 0.4, tilt: 14, turn: -12, depth: 100, parallax: 0.6};
-      var projects = Array.prototype.map.call(projectGrid.querySelectorAll('.project-card'), function(card){
-        var kicker = card.querySelector('.project-kicker');
-        var desc = card.querySelector('.project-body > p');
-        return {
-          kicker: kicker ? kicker.textContent.trim() : '',
-          title: card.querySelector('h3').textContent.trim(),
-          desc: desc ? desc.textContent.trim() : '',
-          tags: Array.prototype.map.call(card.querySelectorAll('.project-tags .chip'), function(c){
-            return {text: c.textContent.trim(), date: c.classList.contains('date')};
-          })
-        };
+    /* ---------- chroma grid (porta vanilla do React Bits Chroma Grid) ---------- */
+    var chromaReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var chromaStops = (function(softness){
+      var core = Math.min(0.95, Math.max(0, 1 - softness));
+      var stops = [];
+      for(var i = 0; i <= 12; i++){
+        var t = i / 12;
+        var u = Math.min(1, Math.max(0, (t - core) / Math.max(0.0001, 1 - core)));
+        var alpha = 1 - u * u * u * (u * (u * 6 - 15) + 10);
+        stops.push('rgba(0,0,0,' + alpha.toFixed(3) + ') ' + (t * 100).toFixed(1) + '%');
+      }
+      return stops.join(', ');
+    })(0.6);
+    var CHROMA_ACCENTS = ['var(--accent)', 'var(--accent-3)', 'var(--accent-2)'];
+
+    var initChroma = function(root, cardSelector, cfg){
+      if(!root){ return; }
+      cfg = cfg || {};
+      var damping = 0.45, fadeOut = 0.6;
+      var cards = Array.prototype.slice.call(root.querySelectorAll(cardSelector));
+      if(!cards.length){ return; }
+      root.classList.add('chroma-root');
+      if(cfg.radius){ root.style.setProperty('--chroma-r', cfg.radius + 'px'); }
+      root.style.setProperty('--chroma-stops', chromaStops);
+      cards.forEach(function(card, i){
+        card.classList.add('chroma-card');
+        card.style.setProperty('--chroma-accent', CHROMA_ACCENTS[i % CHROMA_ACCENTS.length]);
+        var wash = document.createElement('span');
+        wash.className = 'chroma-wash';
+        wash.setAttribute('aria-hidden', 'true');
+        var glow = document.createElement('span');
+        glow.className = 'chroma-card-glow';
+        glow.setAttribute('aria-hidden', 'true');
+        card.appendChild(wash);
+        card.appendChild(glow);
       });
 
-      var wallPlane = null, wallTracks = [], wallMeta = [], wallOffsets = [], wallVels = [], wallBase = [];
-      var wallHoverCol = -1, wallHovered = false, wallActive = null, wallActiveEl = null;
-      var wallRaf = null, wallLast = null, wallBuilt = false;
-      var wallPtr = {x: 0, y: 0}, wallPtrD = {x: 0, y: 0};
-
-      var chipEl = function(t){
-        var s = document.createElement('span');
-        s.className = 'chip' + (t.date ? ' date' : '');
-        s.textContent = t.text;
-        return s;
-      };
-
-      var makeTile = function(p, id, col, pIndex){
-        var t = document.createElement('div');
-        t.className = 'dw-tile';
-        t.tabIndex = 0;
-        t.setAttribute('role', 'button');
-        t.setAttribute('aria-label', p.title + ' — ver detalhes');
-        t.dataset.tileId = id;
-        t.dataset.col = col;
-        t.dataset.p = pIndex;
-        var inner = document.createElement('span');
-        inner.className = 'dw-inner';
-        var k = document.createElement('span');
-        k.className = 'dw-kicker';
-        k.textContent = p.kicker;
-        var h = document.createElement('strong');
-        h.className = 'dw-title';
-        h.textContent = p.title;
-        var tags = document.createElement('span');
-        tags.className = 'dw-tags';
-        p.tags.slice(0, 3).forEach(function(tg){ tags.appendChild(chipEl(tg)); });
-        inner.appendChild(k);
-        inner.appendChild(h);
-        inner.appendChild(tags);
-        t.appendChild(inner);
-        return t;
-      };
-
-      var buildWall = function(){
-        var unit = WALL.tileH + WALL.gap;
-        var height = wallEl.clientHeight || 660;
-        var cols = [];
-        for(var c = 0; c < WALL.cols; c++){ cols.push([]); }
-        projects.forEach(function(p, i){ cols[i % WALL.cols].push(i); });
-        cols = cols.map(function(col){ return col.length ? col : [0]; });
-
-        wallEl.style.setProperty('--dw-w', WALL.tileW + 'px');
-        wallEl.style.setProperty('--dw-h', WALL.tileH + 'px');
-        wallEl.style.setProperty('--dw-gap', WALL.gap + 'px');
-
-        wallPlane = document.createElement('div');
-        wallPlane.className = 'dw-plane';
-        wallTracks = [];
-        wallMeta = [];
-        wallOffsets = [];
-        wallVels = [];
-        wallBase = [];
-
-        cols.forEach(function(col, c){
-          var copyHeight = Math.max(unit, col.length * unit);
-          var copies = Math.max(2, Math.ceil((height * 1.6) / copyHeight) + 1);
-          wallMeta.push({copyHeight: copyHeight});
-          wallOffsets.push(copyHeight * ((c * 0.37) % 1));
-          wallVels.push(0);
-          var pseudo = ((c * 0.6180339887 + 0.35) % 1) * 2 - 1;
-          var sign = c % 2 === 0 ? 1 : -1;
-          wallBase.push(WALL.speed * (1 + WALL.variance * pseudo) * sign);
-
-          var colEl = document.createElement('div');
-          colEl.className = 'dw-col';
-          var track = document.createElement('div');
-          track.className = 'dw-track';
-          for(var k = 0; k < copies; k++){
-            col.forEach(function(pIndex, j){
-              track.appendChild(makeTile(projects[pIndex], c + '-' + k + '-' + j, c, pIndex));
-            });
-          }
-          colEl.appendChild(track);
-          wallPlane.appendChild(colEl);
-          wallTracks.push(track);
+      var place = function(){
+        var box = root.getBoundingClientRect();
+        cards.forEach(function(card){
+          var r = card.getBoundingClientRect();
+          card.style.setProperty('--chroma-ox', (r.left - box.left) + 'px');
+          card.style.setProperty('--chroma-oy', (r.top - box.top) + 'px');
         });
-        wallEl.appendChild(wallPlane);
-        wallBuilt = true;
       };
 
-      var setPlane = function(px, py){
-        wallPlane.style.transform = 'translate(-50%, -50%) scale(1.18) rotateX(' + (WALL.tilt + py) + 'deg) rotateY(' + (WALL.turn + px) + 'deg) translateZ(' + (-WALL.depth) + 'px)';
-      };
-
-      var wallFrame = function(ts){
-        if(wallLast === null){ wallLast = ts; }
-        var dt = Math.min(0.05, Math.max(0, ts - wallLast) / 1000);
-        wallLast = ts;
-        var maxTilt = WALL.parallax * 8;
-        var damp = 1 - Math.exp(-dt / 0.12);
-        wallPtrD.x += (wallPtr.x * maxTilt - wallPtrD.x) * damp;
-        wallPtrD.y += (-wallPtr.y * maxTilt - wallPtrD.y) * damp;
-        setPlane(wallPtrD.x, wallPtrD.y);
-        for(var c = 0; c < wallTracks.length; c++){
-          var paused = wallHovered || wallHoverCol === c || (projectModal && !projectModal.hidden);
-          var target = paused ? 0 : wallBase[c];
-          var ease = 1 - Math.exp(-dt / (target === 0 ? 0.16 : 0.28));
-          wallVels[c] += (target - wallVels[c]) * ease;
-          var h = wallMeta[c].copyHeight;
-          var next = (((wallOffsets[c] + wallVels[c] * dt) % h) + h) % h;
-          wallOffsets[c] = next;
-          wallTracks[c].style.transform = 'translate3d(0,' + (-next) + 'px,0)';
-        }
-        wallRaf = requestAnimationFrame(wallFrame);
-      };
-
-      var setActive = function(tile){
-        if(wallActiveEl){ wallActiveEl.classList.remove('is-active'); }
-        wallActiveEl = tile;
-        wallActive = tile ? tile.dataset.tileId : null;
-        wallHoverCol = tile ? Number(tile.dataset.col) : -1;
-        if(tile){ tile.classList.add('is-active'); }
-      };
-
-      wallEl.addEventListener('pointerenter', function(){ wallHovered = true; });
-      wallEl.addEventListener('pointermove', function(e){
-        var rect = wallEl.getBoundingClientRect();
-        wallPtr.x = (e.clientX - rect.left) / rect.width - 0.5;
-        wallPtr.y = (e.clientY - rect.top) / rect.height - 0.5;
-        var hit = document.elementFromPoint(e.clientX, e.clientY);
-        var tile = hit && hit.closest ? hit.closest('.dw-tile') : null;
-        if(tile && tile.dataset.tileId !== wallActive){ setActive(tile); }
-      });
-      wallEl.addEventListener('pointerleave', function(){
-        wallHovered = false;
-        wallPtr.x = 0;
-        wallPtr.y = 0;
-        setActive(null);
-      });
-      wallEl.addEventListener('focusin', function(e){
-        var tile = e.target.closest ? e.target.closest('.dw-tile') : null;
-        if(tile){ setActive(tile); }
-      });
-      wallEl.addEventListener('focusout', function(){ setActive(null); });
-
-      var modalPrevFocus = null;
-      var closeProject = function(){
-        projectModal.hidden = true;
-        document.body.classList.remove('modal-open');
-        document.removeEventListener('keydown', onProjectKey);
-        if(modalPrevFocus && modalPrevFocus.focus){ modalPrevFocus.focus(); }
-      };
-      var onProjectKey = function(e){ if(e.key === 'Escape'){ closeProject(); } };
-      var openProject = function(index, fromEl){
-        var p = projects[index];
-        if(!p || !projectModal){ return; }
-        modalPrevFocus = fromEl;
-        document.getElementById('projectModalKicker').textContent = p.kicker;
-        document.getElementById('projectModalTitle').textContent = p.title;
-        document.getElementById('projectModalDesc').textContent = p.desc;
-        var tagBox = document.getElementById('projectModalTags');
-        tagBox.textContent = '';
-        p.tags.forEach(function(tg){ tagBox.appendChild(chipEl(tg)); });
-        projectModal.hidden = false;
-        document.body.classList.add('modal-open');
-        document.getElementById('projectModalClose').focus();
-        document.addEventListener('keydown', onProjectKey);
-      };
-      if(projectModal){
-        document.getElementById('projectModalClose').addEventListener('click', closeProject);
-        projectModal.addEventListener('click', function(e){ if(e.target === projectModal){ closeProject(); } });
-      }
-      wallEl.addEventListener('click', function(e){
-        var tile = e.target.closest ? e.target.closest('.dw-tile') : null;
-        if(tile){ openProject(Number(tile.dataset.p), tile); }
-      });
-      wallEl.addEventListener('keydown', function(e){
-        if(e.key !== 'Enter' && e.key !== ' '){ return; }
-        var tile = e.target.closest ? e.target.closest('.dw-tile') : null;
-        if(tile){ e.preventDefault(); openProject(Number(tile.dataset.p), tile); }
-      });
-
-      var mqWide = window.matchMedia('(min-width: 821px)');
-      var mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-      var syncWall = function(){
-        var on = mqWide.matches && !mqReduce.matches;
-        if(on){
-          wallWrap.style.display = 'block';
-          projectGrid.style.display = 'none';
-          if(!wallBuilt){ buildWall(); }
-          if(wallRaf === null){ wallLast = null; wallRaf = requestAnimationFrame(wallFrame); }
+      var s = {x: 0, y: 0, tx: 0, ty: 0, power: 0, target: 0, primed: false};
+      var raf = 0, last = 0;
+      var frame = function(now){
+        raf = 0;
+        var dt = last ? Math.min(0.05, (now - last) / 1000) : 1 / 60;
+        last = now;
+        var follow = chromaReduce ? 1 : 1 - Math.exp(-dt / Math.max(0.01, damping * 0.32));
+        s.x += (s.tx - s.x) * follow;
+        s.y += (s.ty - s.y) * follow;
+        var span = s.target > s.power ? 0.1 : Math.max(0.02, fadeOut * 0.35);
+        s.power += (s.target - s.power) * (chromaReduce ? 1 : 1 - Math.exp(-dt / span));
+        root.style.setProperty('--chroma-x', s.x.toFixed(2) + 'px');
+        root.style.setProperty('--chroma-y', s.y.toFixed(2) + 'px');
+        root.style.setProperty('--chroma-power', s.power.toFixed(4));
+        var settled = Math.abs(s.tx - s.x) < 0.1 && Math.abs(s.ty - s.y) < 0.1 && Math.abs(s.target - s.power) < 0.002;
+        if(settled){
+          s.power = s.target;
+          root.style.setProperty('--chroma-power', s.power.toFixed(4));
+          last = 0;
         } else {
-          wallWrap.style.display = '';
-          projectGrid.style.display = '';
-          if(wallRaf !== null){ cancelAnimationFrame(wallRaf); wallRaf = null; }
+          raf = requestAnimationFrame(frame);
         }
       };
-      if(mqWide.addEventListener){
-        mqWide.addEventListener('change', syncWall);
-        mqReduce.addEventListener('change', syncWall);
-      }
-      syncWall();
-    }
+      var wake = function(){ if(!raf){ raf = requestAnimationFrame(frame); } };
+      var move = function(e){
+        var box = root.getBoundingClientRect();
+        s.tx = e.clientX - box.left;
+        s.ty = e.clientY - box.top;
+        if(!s.primed || s.power < 0.02){ s.x = s.tx; s.y = s.ty; s.primed = true; }
+        s.target = 1;
+        place();
+        wake();
+      };
+      var leave = function(){ s.target = 0; wake(); };
+      root.addEventListener('pointermove', move);
+      root.addEventListener('pointerdown', move);
+      root.addEventListener('pointerleave', leave);
+      root.addEventListener('pointercancel', leave);
+      window.addEventListener('resize', place);
+      place();
+    };
+
+    initChroma(document.querySelector('.skills-grid'), '.skill-card');
+    initChroma(document.querySelector('.project-grid'), '.project-card');
+    initChroma(document.querySelector('.cert-list'), '.cert-item', {radius: 220});
+    initChroma(document.querySelector('.community-row'), '.event-chip', {radius: 180});
+    initChroma(document.querySelector('.timeline'), '.timeline-card', {radius: 240});
 
     var ICON_COPY ='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>';
     var ICON_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
