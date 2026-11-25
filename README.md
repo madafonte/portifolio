@@ -9,18 +9,17 @@ Site pessoal para apresentar minha trajetória como estudante de Ciência da Com
 - **Skills** — linguagens, frontend, backend e APIs, dados, testes e DevOps, ferramentas e métodos.
 - **Projetos**
   - **Sollie** — startup agtech, pré-incubação Porto Digital (abr–ago 2026)
+  - **Deixa Eu** — jogo em C ambientado no Recife, 1º lugar na Mostra Tech 2026.1
   - **Tyde** — painel territorial do Recife com Next.js, TypeScript e MapLibre
   - **Quakku** — gestão de projetos acadêmicos com Next.js, FastAPI e PostgreSQL
   - **Card0** — calculadora de impacto ambiental para a Edenred (Next.js, TypeScript, Tailwind, Cypress)
   - **Portal de notícias para o Jornal do Commercio** — Django, PostgreSQL e Gemini API
-  - **Deixa Eu** — jogo em C ambientado no Recife
-  - **Quickselect × Mediana das Medianas** — estudo de complexidade em C e Python
   - **UpTown** — marketplace de roupas com MySQL, Java/JDBC e dashboard em Chart.js
   - **Resumo Diário de Processos Seletivos** — automação com Google Apps Script, Gmail e Gemini API
-  - **Outros** — Concursos TI, artigo sobre Docker, Arkanoid, cliente-servidor com sockets, análise de transferências no futebol, RE:PLAY, TaskFlow e Vida Pet
+  - **Outros** — Quickselect × Mediana das Medianas, Concursos TI, artigo sobre Docker, Arkanoid, cliente-servidor com sockets, análise de transferências no futebol, RE:PLAY, TaskFlow e Vida Pet
 - **Impacto** — linha do tempo horizontal com monitorias (Fundamentos de Programação, Programação Imperativa Funcional, Projeto BASE) e extensão no Projeto Lovelaces.
 - **Formação & certificações** — CESAR School, lista completa de disciplinas e certificações (Porto Digital, Ethereum Developer Packs, Power BI, Python Essentials 1, JavaScript Essentials 1, Alura).
-- **Comunidade** — eventos de que participei (Rec'n'Play, Tech Woman, UFPE no Mercado, UPE Destaca, Fuckup Nights, Feira de Empreendedorismo Sebrae).
+- **Comunidade** — eventos de que participei (Mostra Tech 2026.1, Vem Curtir o CESAR, Rec'n'Play, Tech Woman, UFPE no Mercado, UPE Destaca, Fuckup Nights, Feira de Empreendedorismo Sebrae).
 - **Contato** — e-mail, telefone, LinkedIn e GitHub.
 
 ## Tecnologias utilizadas
