@@ -6,15 +6,18 @@ Site pessoal para apresentar minha trajetória como estudante de Ciência da Com
 
 - **Início** — apresentação, status de disponibilidade e uma amostra da minha stack em forma de código.
 - **Sobre** — formação, foco de carreira e forma de trabalhar.
-- **Skills** — linguagens (Python, JavaScript, TypeScript, Java, C, SQL), frontend, dados (Django ORM, PostgreSQL, SQLite, MySQL, JDBC) e ferramentas e métodos (Git/GitHub, Figma, Trello, Power BI, Scrum, Kanban, XP).
+- **Skills** — linguagens, frontend, backend e APIs, dados, testes e DevOps, ferramentas e métodos.
 - **Projetos**
   - **Sollie** — startup agtech, pré-incubação Porto Digital (abr–ago 2026)
-  - **Vida Pet** — sistema de petshop em Python
-  - **Site do Jornal do Commercio** — reformulação em Django
-  - **RE:PLAY** — minigames retrô em C com Raylib
+  - **Tyde** — painel territorial do Recife com Next.js, TypeScript e MapLibre
+  - **Quakku** — gestão de projetos acadêmicos com Next.js, FastAPI e PostgreSQL
   - **Card0** — calculadora de impacto ambiental para a Edenred (Next.js, TypeScript, Tailwind, Cypress)
-  - **Resumo Diário de Processos Seletivos** — automação com Google Apps Script, Gmail e Gemini API
+  - **Portal de notícias para o Jornal do Commercio** — Django, PostgreSQL e Gemini API
+  - **Deixa Eu** — jogo em C ambientado no Recife
+  - **Quickselect × Mediana das Medianas** — estudo de complexidade em C e Python
   - **UpTown** — marketplace de roupas com MySQL, Java/JDBC e dashboard em Chart.js
+  - **Resumo Diário de Processos Seletivos** — automação com Google Apps Script, Gmail e Gemini API
+  - **Outros** — Concursos TI, artigo sobre Docker, Arkanoid, cliente-servidor com sockets, análise de transferências no futebol, RE:PLAY, TaskFlow e Vida Pet
 - **Impacto** — linha do tempo horizontal com monitorias (Fundamentos de Programação, Programação Imperativa Funcional, Projeto BASE) e extensão no Projeto Lovelaces.
 - **Formação & certificações** — CESAR School, lista completa de disciplinas e certificações (Porto Digital, Ethereum Developer Packs, Power BI, Python Essentials 1, JavaScript Essentials 1, Alura).
 - **Comunidade** — eventos de que participei (Rec'n'Play, Tech Woman, UFPE no Mercado, UPE Destaca, Fuckup Nights, Feira de Empreendedorismo Sebrae).
@@ -31,6 +34,7 @@ Site pessoal para apresentar minha trajetória como estudante de Ciência da Com
 ```
 index.html          página única (estilos e conteúdo)
 assets/
+  og-image.png      imagem de prévia ao compartilhar o link
   pill-nav.css      estilos da navegação
   pill-nav.js       comportamento da navegação
   splash-cursor.js  efeito de cursor da tela de abertura

@@ -11,7 +11,11 @@
 <meta property="og:title" content="Maria Augusta Hatem da Fonte | MA.dev">
 <meta property="og:description" content="Estudante de Ciência da Computação (CESAR School), fundadora da Sollie e em busca de estágio em desenvolvimento de software ou gestão de projetos.">
 <meta property="og:url" content="https://madafonte.github.io/portifolio/">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://madafonte.github.io/portifolio/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Maria Augusta Hatem da Fonte, estudante de Ciência da Computação">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#E31C6C">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23E31C6C'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='28' font-weight='700' text-anchor='middle' fill='white'%3EMA%3C/text%3E%3C/svg%3E">
 <script>
@@ -278,6 +282,14 @@
   .project-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:auto;padding-top:.4rem;}
   .chip.date{color:var(--accent-3);border-color:color-mix(in srgb, var(--accent-3) 40%, var(--line));}
 
+  .project-links{display:flex;flex-wrap:wrap;gap:1.1rem;border-top:1px solid var(--line);padding-top:.85rem;}
+  .project-links a{display:inline-flex;align-items:center;gap:.3rem;font-family:var(--font-mono);font-size:.8rem;font-weight:700;color:var(--accent);text-decoration:none;}
+  .project-links a:hover{text-decoration:underline;text-underline-offset:3px;}
+  .project-links svg{width:13px;height:13px;}
+  .project-private{font-family:var(--font-mono);font-size:.8rem;color:var(--ink-faint);}
+  .project-subhead{font-size:1.2rem;margin:3rem 0 1.5rem;}
+  .other-projects .project-card:last-child:nth-child(odd){grid-column:1 / -1;}
+
   /* ---------- impact (horizontal timeline) ---------- */
   .timeline-wrap{display:flex;align-items:center;gap:.75rem;}
   .timeline-nav{
@@ -441,7 +453,7 @@
         <div class="status-pill"><span class="status-dot"></span>Disponível para estágio · Recife, PE</div>
         <h1><span style="color:var(--accent)">Maria Augusta</span><br>Hatem da Fonte</h1>
         <p class="tagline">Código com propósito, feito com <em>estilo</em>.</p>
-        <p class="lede">Estudante de Ciência da Computação na CESAR School, no 4º período, fundadora da startup agtech Sollie e em busca de estágio em desenvolvimento de software ou gestão de projetos. Transformo lógica em ferramentas que resolvem problemas reais — de sistemas Django a jogos em C.</p>
+        <p class="lede">Estudante de Ciência da Computação na CESAR School, no 4º período, fundadora da startup agtech Sollie e em busca de estágio em desenvolvimento de software ou gestão de projetos. Transformo lógica em ferramentas que resolvem problemas reais — de aplicações web e automações a jogos em C.</p>
         <div class="hero-ctas">
           <a class="btn btn-solid" href="#projetos">Ver projetos
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18 18 6M9 6h9v9"/></svg>
@@ -453,7 +465,7 @@
         </div>
         <div class="stat-row">
           <div><span class="stat-num">4º</span><span class="stat-label">período · CESAR School</span></div>
-          <div><span class="stat-num">7</span><span class="stat-label">projetos práticos</span></div>
+          <div><span class="stat-num">17</span><span class="stat-label">projetos práticos</span></div>
           <div><span class="stat-num">4</span><span class="stat-label">monitorias e extensão</span></div>
           <div><span class="stat-num">65h+</span><span class="stat-label">em certificações</span></div>
           <div><span class="stat-num">PT / EN</span><span class="stat-label">nativo · intermediário</span></div>
@@ -484,7 +496,7 @@
           <div class="eyebrow">// sobre</div>
           <h2>Quem escreve esse código</h2>
         </div>
-        <p class="lede">Sou estudante de Ciência da Computação na CESAR School e estou em busca de um estágio em desenvolvimento de software ou gestão de projetos. Fundei a Sollie, uma startup agtech que foi selecionada para o Sertão Inovador e para a pré-incubação do Porto Digital. Gosto de aprender fazendo — por isso já passei por Python, JavaScript, TypeScript, Java, SQL, C e Django construindo projetos que resolvem problemas reais, do bem-estar de pets ao cálculo de impacto ambiental.</p>
+        <p class="lede">Sou estudante de Ciência da Computação na CESAR School e estou em busca de um estágio em desenvolvimento de software ou gestão de projetos. Fundei a Sollie, uma startup agtech que foi selecionada para o Sertão Inovador e para a pré-incubação do Porto Digital. Gosto de aprender fazendo — por isso já passei por Python, JavaScript, TypeScript, Java, SQL, C e Django construindo aplicações web, automações, jogos e análises de dados, do bem-estar de pets ao cálculo de impacto ambiental.</p>
         <p class="lede">Tenho vivência com metodologias ágeis (Scrum, Kanban, XP) e um jeito organizado e colaborativo de trabalhar. Ensinar é, pra mim, uma forma de aprender duas vezes — e de abrir espaço para mais mulheres na tecnologia.</p>
       </div>
       <div class="facts">
@@ -518,21 +530,33 @@
           </div>
         </div>
         <div class="skill-card">
-          <h3>Frontend</h3>
+          <h3>Frontend &amp; Mobile</h3>
           <div class="chip-row">
-            <span class="chip">React</span><span class="chip">Next.js (App Router)</span><span class="chip">Tailwind CSS</span><span class="chip">HTML</span><span class="chip">CSS</span>
+            <span class="chip">React</span><span class="chip">Next.js (App Router)</span><span class="chip">Tailwind CSS</span><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">Chart.js</span><span class="chip">Recharts</span><span class="chip">React Native (Expo)</span><span class="chip">MapLibre</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3>Backend &amp; APIs</h3>
+          <div class="chip-row">
+            <span class="chip">Django</span><span class="chip">FastAPI</span><span class="chip">Spring Boot</span><span class="chip">Javalin</span><span class="chip">APIs REST</span><span class="chip">JSON</span><span class="chip">Gemini API</span><span class="chip">Google Apps Script</span><span class="chip">Sockets TCP</span>
           </div>
         </div>
         <div class="skill-card">
           <h3>Dados</h3>
           <div class="chip-row">
-            <span class="chip">Django ORM</span><span class="chip">PostgreSQL</span><span class="chip">SQLite</span><span class="chip">MySQL</span><span class="chip">JDBC</span>
+            <span class="chip">PostgreSQL</span><span class="chip">MySQL</span><span class="chip">SQLite</span><span class="chip">H2</span><span class="chip">Supabase</span><span class="chip">Redis</span><span class="chip">Django ORM</span><span class="chip">JDBC</span><span class="chip">JPA</span><span class="chip">pandas</span><span class="chip">SciPy</span><span class="chip">Matplotlib</span><span class="chip">Power BI</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3>Testes &amp; DevOps</h3>
+          <div class="chip-row">
+            <span class="chip">Cypress</span><span class="chip">Playwright</span><span class="chip">Pytest</span><span class="chip">GitHub Actions</span><span class="chip">Docker</span><span class="chip">Git / GitHub</span>
           </div>
         </div>
         <div class="skill-card">
           <h3>Ferramentas &amp; métodos</h3>
           <div class="chip-row">
-            <span class="chip">Git / GitHub</span><span class="chip">VS Code</span><span class="chip">Figma</span><span class="chip">Trello</span><span class="chip">Power BI</span><span class="chip">Scrum</span><span class="chip">Kanban</span><span class="chip">XP</span><span class="chip">Desenvolvimento Ágil</span>
+            <span class="chip">VS Code</span><span class="chip">Figma</span><span class="chip">Trello</span><span class="chip">Raylib</span><span class="chip">Scrum</span><span class="chip">Kanban</span><span class="chip">XP</span><span class="chip">Desenvolvimento Ágil</span>
           </div>
         </div>
       </div>
@@ -556,9 +580,13 @@
             </div>
             <h3>Sollie — Agricultura Inteligente na Palma da Mão</h3>
             <p>Startup agtech (encerrada) que ajudava pequenos e médios agricultores a tomar decisões técnicas e financeiras melhores, unindo uma IA especializada (a Mudinha IA), mapeamento do terreno, calendário agrícola e gestão financeira em um só app. Selecionada para os programas de pré-incubação do Porto Digital e do Sertão Inovador.</p>
+            <p>O app foi construído em React Native (Expo), com API em FastAPI e Supabase: terrenos, áreas de plantio, safras, calendário de atividades, lembretes e arquivos, além do módulo financeiro na API.</p>
             <div class="project-tags">
               <span class="chip date">Abr – Ago 2026</span>
               <span class="chip">Agtech</span>
+              <span class="chip">React Native</span>
+              <span class="chip">FastAPI</span>
+              <span class="chip">Supabase</span>
               <span class="chip">IA</span>
               <span class="chip">Produto</span>
             </div>
@@ -568,24 +596,15 @@
         <article class="project-card">
           <div class="project-body">
             <div class="project-kicker">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7"/></svg>
-              Projeto pessoal
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17.5" cy="9" r="2.5"/><path d="M15.5 14.2c2.6.3 4.5 2.6 4.5 5.3"/></svg>
+              Projeto em equipe · Dados públicos
             </div>
-            <h3>Vida Pet — Sistema de Petshop</h3>
-            <p>Sistema em Python para organização e bem-estar de pets: cadastro, edição e acompanhamento de cuidados, metas e humor dos animais, com sugestões personalizadas por espécie e idade.</p>
-            <div class="project-tags"><span class="chip">Python</span></div>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <div class="project-body">
-            <div class="project-kicker">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7"/></svg>
-              Plataforma web real
+            <h3>Tyde — Inteligência Territorial do Recife</h3>
+            <p>Painel com mapa interativo dos 8 distritos sanitários e 94 bairros do Recife, cruzando saneamento, chuva, maré e histórico epidemiológico, com ranking de prioridade e fórmula visível. Os dados são sincronizados por GitHub Actions e o projeto tem testes automatizados.</p>
+            <div class="project-tags"><span class="chip">Next.js</span><span class="chip">React</span><span class="chip">TypeScript</span><span class="chip">MapLibre</span><span class="chip">Playwright</span><span class="chip">GitHub Actions</span></div>
+            <div class="project-links">
+              <span class="project-private">Código privado</span>
             </div>
-            <h3>Site do Jornal do Commercio</h3>
-            <p>Reformulação de interface e experiência de uma plataforma jornalística real, com melhorias de navegação voltadas ao engajamento dos leitores e recursos dinâmicos de atualização de conteúdo.</p>
-            <div class="project-tags"><span class="chip">Django</span><span class="chip">Python</span><span class="chip">UX</span></div>
           </div>
         </article>
 
@@ -593,11 +612,15 @@
           <div class="project-body">
             <div class="project-kicker">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17.5" cy="9" r="2.5"/><path d="M15.5 14.2c2.6.3 4.5 2.6 4.5 5.3"/></svg>
-              Equipe de 3
+              Projeto em equipe · Plataforma web
             </div>
-            <h3>RE:PLAY — Minigames Retrô</h3>
-            <p>Tetris, Pac-Man e Sea Quest recriados do zero em C com a biblioteca Raylib, com foco em desempenho, lógica de jogo e manipulação gráfica em baixo nível.</p>
-            <div class="project-tags"><span class="chip">C</span><span class="chip">Raylib</span><span class="chip">Jogos</span></div>
+            <h3>Quakku — Gestão de Projetos Acadêmicos</h3>
+            <p>Plataforma para estudantes e professores orientadores acompanharem projetos, com quadro Kanban, entregas semanais, relatórios e integrações com Google Classroom, Google Workspace e WhatsApp.</p>
+            <div class="project-tags"><span class="chip">Next.js</span><span class="chip">TypeScript</span><span class="chip">FastAPI</span><span class="chip">PostgreSQL</span><span class="chip">Redis</span><span class="chip">Celery</span><span class="chip">Docker</span></div>
+            <div class="project-links">
+              <a href="https://quakku.vercel.app/" target="_blank" rel="noopener" aria-label="Demo: Quakku (abre em nova aba)">Demo<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M9 6h9v9"/></svg></a>
+              <span class="project-private">Código privado</span>
+            </div>
           </div>
         </article>
 
@@ -605,11 +628,71 @@
           <div class="project-body">
             <div class="project-kicker">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17.5" cy="9" r="2.5"/><path d="M15.5 14.2c2.6.3 4.5 2.6 4.5 5.3"/></svg>
-              Projeto para a Edenred
+              Projeto em equipe · Edenred
             </div>
             <h3>Card0 — Calculadora de Impacto Ambiental</h3>
-            <p>Ferramenta que quantifica e compara emissões de CO₂e entre cartões físicos e pagamentos digitais, seguindo GHG Protocol e IPCC, com testes automatizados via Cypress.</p>
-            <div class="project-tags"><span class="chip">Next.js</span><span class="chip">TypeScript</span><span class="chip">Tailwind CSS</span><span class="chip">Cypress</span></div>
+            <p>Ferramenta web que quantifica e compara as emissões de CO₂e de cartões físicos e pagamentos digitais, seguindo GHG Protocol e IPCC. Reúne calculadora de impacto, linha do tempo, simulador de risco operacional, análise de ciclo de vida simplificada, login com verificação de e-mail e testes com Cypress.</p>
+            <div class="project-tags"><span class="chip">Next.js</span><span class="chip">TypeScript</span><span class="chip">Tailwind CSS</span><span class="chip">Recharts</span><span class="chip">Cypress</span></div>
+            <div class="project-links">
+              <a href="https://github.com/Gustavotorrescastro/Card0" target="_blank" rel="noopener" aria-label="Código: Card0 (abre em nova aba)">Código<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M9 6h9v9"/></svg></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-body">
+            <div class="project-kicker">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17.5" cy="9" r="2.5"/><path d="M15.5 14.2c2.6.3 4.5 2.6 4.5 5.3"/></svg>
+              Projeto em equipe · CESAR School
+            </div>
+            <h3>Portal de Notícias para o Jornal do Commercio</h3>
+            <p>Portal desenvolvido para o JC com foco em engajamento: resumo automático com Gemini, enquetes, galeria de vídeos, recomendações personalizadas, notícias salvas e jogos como Sudoku e Caça-links. Tem testes com pytest e pipeline de deploy para o Azure.</p>
+            <div class="project-tags"><span class="chip">Django</span><span class="chip">Python</span><span class="chip">PostgreSQL</span><span class="chip">Gemini API</span><span class="chip">Pytest</span><span class="chip">GitHub Actions</span></div>
+            <div class="project-links">
+              <a href="https://github.com/Gustavotorrescastro/ProjetoJC" target="_blank" rel="noopener" aria-label="Código: Portal de Notícias para o Jornal do Commercio (abre em nova aba)">Código<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M9 6h9v9"/></svg></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-body">
+            <div class="project-kicker">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17.5" cy="9" r="2.5"/><path d="M15.5 14.2c2.6.3 4.5 2.6 4.5 5.3"/></svg>
+              Projeto em equipe · Jogo
+            </div>
+            <h3>Deixa Eu — Aventura pelo Recife</h3>
+            <p>Jogo 2D em C que mistura plataforma e corrida em três fases: de bicicleta pelas ruas chuvosas, pela praia de Boa Viagem e até o Parque das Esculturas. Uma lista duplamente encadeada circular gerencia as fases, e filas controlam os obstáculos.</p>
+            <div class="project-tags"><span class="chip">C</span><span class="chip">Raylib</span><span class="chip">Estruturas de dados</span><span class="chip">Jogos</span></div>
+            <div class="project-links">
+              <a href="https://github.com/DiMag-CC/DeixaEu" target="_blank" rel="noopener" aria-label="Código: Deixa Eu (abre em nova aba)">Código<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M9 6h9v9"/></svg></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-body">
+            <div class="project-kicker">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17.5" cy="9" r="2.5"/><path d="M15.5 14.2c2.6.3 4.5 2.6 4.5 5.3"/></svg>
+              Equipe de 4 · Teoria da Computação
+            </div>
+            <h3>Quickselect × Mediana das Medianas</h3>
+            <p>Comparação de dois algoritmos de seleção do k-ésimo menor elemento, implementados em C e Python. Benchmarks reproduzíveis com até 1 milhão de elementos, testes de corretude e gráficos que confrontam teoria e prática.</p>
+            <div class="project-tags"><span class="chip">C</span><span class="chip">Python</span><span class="chip">Algoritmos</span><span class="chip">Complexidade</span><span class="chip">Matplotlib</span></div>
+            <div class="project-links">
+              <a href="https://github.com/Brno143/projeto_teoria" target="_blank" rel="noopener" aria-label="Código: Quickselect × Mediana das Medianas (abre em nova aba)">Código<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M9 6h9v9"/></svg></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-body">
+            <div class="project-kicker">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17.5" cy="9" r="2.5"/><path d="M15.5 14.2c2.6.3 4.5 2.6 4.5 5.3"/></svg>
+              Equipe de 6 · Banco de Dados
+            </div>
+            <h3>UpTown — Marketplace de Roupas</h3>
+            <p>Projeto da disciplina de Banco de Dados: aplicação web que reúne em um único banco o catálogo, fornecedores, clientes e pedidos de uma marca de roupas. Modelo com 13 tabelas em MySQL, backend em Java com JDBC, cadastros completos, 8 consultas com CTE recursiva e funções de janela e dashboard com 6 gráficos.</p>
+            <div class="project-tags"><span class="chip">MySQL</span><span class="chip">Java</span><span class="chip">JDBC</span><span class="chip">Javalin</span><span class="chip">Chart.js</span><span class="chip">Dashboard</span></div>
           </div>
         </article>
 
@@ -625,15 +708,127 @@
           </div>
         </article>
 
+      </div>
+
+      <h3 class="project-subhead">Outros projetos</h3>
+      <div class="project-grid other-projects">
+
+        <article class="project-card">
+          <div class="project-body">
+            <div class="project-kicker">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7"/></svg>
+              Projeto pessoal
+            </div>
+            <h3>Concursos TI — Recife</h3>
+            <p>Agregador de concursos públicos de TI: consulta a interface de dados (MCP) do PCI Concursos, filtra por área, local e escolaridade e publica o resultado em um site, atualizado por um workflow do GitHub Actions.</p>
+            <div class="project-tags"><span class="chip">Python</span><span class="chip">API</span><span class="chip">JSON</span><span class="chip">GitHub Actions</span><span class="chip">GitHub Pages</span></div>
+            <div class="project-links">
+              <a href="https://github.com/madafonte/inscricoes" target="_blank" rel="noopener" aria-label="Código: Concursos TI (abre em nova aba)">Código<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M9 6h9v9"/></svg></a>
+              <a href="https://madafonte.github.io/inscricoes/" target="_blank" rel="noopener" aria-label="Site: Concursos TI (abre em nova aba)">Site<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M9 6h9v9"/></svg></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-body">
+            <div class="project-kicker">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7"/></svg>
+              Artigo acadêmico
+            </div>
+            <h3>Overhead do Docker — Windows/WSL2 × macOS</h3>
+            <p>Estudo que mede o custo da containerização em ambientes de desenvolvimento, comparando Docker e execução nativa com benchmarks de memória, disco e tempo de inicialização. Scripts e dados publicados.</p>
+            <div class="project-tags"><span class="chip">Docker</span><span class="chip">Linux</span><span class="chip">Shell</span><span class="chip">Benchmarks</span></div>
+            <div class="project-links">
+              <a href="https://github.com/madafonte/artigo-hardware" target="_blank" rel="noopener" aria-label="Código: Overhead do Docker (abre em nova aba)">Código<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M9 6h9v9"/></svg></a>
+              <a href="https://github.com/madafonte/artigo-hardware/blob/main/artigo_final_v5.pdf" target="_blank" rel="noopener" aria-label="Artigo: Overhead do Docker (abre em nova aba)">Artigo<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M9 6h9v9"/></svg></a>
+            </div>
+          </div>
+        </article>
+
         <article class="project-card">
           <div class="project-body">
             <div class="project-kicker">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17.5" cy="9" r="2.5"/><path d="M15.5 14.2c2.6.3 4.5 2.6 4.5 5.3"/></svg>
-              Equipe de 6 · Banco de Dados
+              Equipe de 3
             </div>
-            <h3>UpTown — Marketplace de Roupas</h3>
-            <p>Projeto da disciplina de Banco de Dados: aplicação web que reúne em um único banco o catálogo, fornecedores, clientes e pedidos de uma marca de roupas. Modelo com 13 tabelas em MySQL, backend em Java com JDBC, cadastros completos, 8 consultas com CTE recursiva e funções de janela e dashboard com 6 gráficos.</p>
-            <div class="project-tags"><span class="chip">MySQL</span><span class="chip">Java</span><span class="chip">JDBC</span><span class="chip">Javalin</span><span class="chip">Chart.js</span><span class="chip">Dashboard</span></div>
+            <h3>Arkanoid</h3>
+            <p>Releitura do clássico em C com Raylib: três layouts de fase, seis power-ups, 23 skins de bola, efeitos de partículas e recorde salvo em arquivo.</p>
+            <div class="project-tags"><span class="chip">C</span><span class="chip">Raylib</span><span class="chip">Jogos</span></div>
+            <div class="project-links">
+              <a href="https://github.com/luizabalmeida/ARKANOID-GAME" target="_blank" rel="noopener" aria-label="Código: Arkanoid (abre em nova aba)">Código<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M9 6h9v9"/></svg></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-body">
+            <div class="project-kicker">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17.5" cy="9" r="2.5"/><path d="M15.5 14.2c2.6.3 4.5 2.6 4.5 5.3"/></svg>
+              Projeto em equipe · Redes
+            </div>
+            <h3>Cliente-Servidor com Sockets</h3>
+            <p>Aplicação em Python que implementa Go-Back-N e Repetição Seletiva sobre sockets, com vários clientes simultâneos, checksum SHA-256, criptografia Fernet e simulação de perda e corrupção de pacotes.</p>
+            <div class="project-tags"><span class="chip">Python</span><span class="chip">Sockets TCP</span><span class="chip">Threads</span><span class="chip">Criptografia</span></div>
+            <div class="project-links">
+              <span class="project-private">Código privado</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-body">
+            <div class="project-kicker">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17.5" cy="9" r="2.5"/><path d="M15.5 14.2c2.6.3 4.5 2.6 4.5 5.3"/></svg>
+              Projeto em equipe · Estatística
+            </div>
+            <h3>Transferências no Futebol Europeu</h3>
+            <p>Análise exploratória sobre investimento em contratações e desempenho nas cinco grandes ligas europeias, com correção por inflação e correlações de Pearson e Spearman.</p>
+            <div class="project-tags"><span class="chip">Python</span><span class="chip">pandas</span><span class="chip">SciPy</span><span class="chip">Jupyter</span></div>
+            <div class="project-links">
+              <a href="https://github.com/Amfgs/projeto-estatistica" target="_blank" rel="noopener" aria-label="Código: Transferências no Futebol Europeu (abre em nova aba)">Código<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M9 6h9v9"/></svg></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-body">
+            <div class="project-kicker">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17.5" cy="9" r="2.5"/><path d="M15.5 14.2c2.6.3 4.5 2.6 4.5 5.3"/></svg>
+              Equipe de 3
+            </div>
+            <h3>RE:PLAY — Minigames Retrô</h3>
+            <p>Coleção de minigames em C com a biblioteca Raylib: menu com portais e versões de Tetris e Pac-Man.</p>
+            <div class="project-tags"><span class="chip">C</span><span class="chip">Raylib</span><span class="chip">Jogos</span></div>
+            <div class="project-links">
+              <a href="https://github.com/madafonte/RE-PLAY-GAME" target="_blank" rel="noopener" aria-label="Código: RE:PLAY (abre em nova aba)">Código<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M9 6h9v9"/></svg></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-body">
+            <div class="project-kicker">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7"/></svg>
+              Projeto pessoal
+            </div>
+            <h3>TaskFlow — Quadro Kanban</h3>
+            <p>Organizador de tarefas em três colunas, para criar, mover e remover cartões, com persistência em banco H2.</p>
+            <div class="project-tags"><span class="chip">Java</span><span class="chip">Spring Boot</span><span class="chip">Thymeleaf</span><span class="chip">JPA</span><span class="chip">H2</span></div>
+            <div class="project-links">
+              <a href="https://github.com/madafonte/TaskFlow" target="_blank" rel="noopener" aria-label="Código: TaskFlow (abre em nova aba)">Código<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M9 6h9v9"/></svg></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-body">
+            <div class="project-kicker">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7"/></svg>
+              Projeto pessoal
+            </div>
+            <h3>Vida Pet — Sistema de Petshop</h3>
+            <p>Sistema em Python para organização e bem-estar de pets: cadastro, edição e acompanhamento de cuidados, metas e humor dos animais, com sugestões personalizadas por espécie e idade.</p>
+            <div class="project-tags"><span class="chip">Python</span></div>
           </div>
         </article>
 
@@ -684,7 +879,7 @@
               </div>
               <h3>Extensionista, Projeto Lovelaces</h3>
               <p class="impact-org">CESAR School</p>
-              <p>Ministrou aulas de Python para meninas do ensino médio, incentivando o interesse feminino em tecnologia.</p>
+              <p>Aulas de Python para meninas do ensino médio, incentivando o interesse feminino em tecnologia.</p>
             </div>
             <div class="h-rail"><div class="timeline-dot c3"></div></div>
             <div class="timeline-date">Março – Junho 2026</div>
@@ -851,7 +1046,7 @@
       </div>
       <div class="footer-row" style="margin-top:2.5rem;">
         <span class="mono">Maria Augusta Hatem da Fonte · Recife, PE, Brasil</span>
-        <span>Feito com curiosidade e algumas linhas de Python · <span id="year"></span></span>
+        <span>Feito com curiosidade em HTML, CSS e JavaScript · <span id="year"></span></span>
       </div>
     </div>
   </section>
@@ -1065,7 +1260,7 @@
     };
 
     initChroma(document.querySelector('.skills-grid'), '.skill-card');
-    initChroma(document.querySelector('.project-grid'), '.project-card');
+    Array.prototype.forEach.call(document.querySelectorAll('.project-grid'), function(grid){ initChroma(grid, '.project-card'); });
     initChroma(document.querySelector('.cert-list'), '.cert-item', {radius: 220});
     initChroma(document.querySelector('.community-row'), '.event-chip', {radius: 180});
     initChroma(document.querySelector('.timeline'), '.timeline-card', {radius: 240});
